@@ -54,19 +54,3 @@ uint32_t MEORainbow2::Wheel(uint16_t WheelPos) {
 	}
 	return(COLOR(r,g,b));
 }
-
-//MEORainbow1 from LEDStrip
-//void rainbow(uint8_t wait, uint8_t repeat) {
-//	int i, j, rep;
-
-//	for (rep=0;rep<repeat ; rep++)
-//	{
-//		for (j=0; j < 384; j++) {     // 3 cycles of all 384 colors in the wheel
-//			for (i=0; i < strip.numPixels(); i++) {
-//				strip.setPixelColor(i, Wheel( (i + j) % 384));
-//			}  
-//			strip.show();   // write all the pixels out
-//			delay(wait);
-//		}
-//	}
-//}

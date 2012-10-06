@@ -16,19 +16,22 @@
 #include <LightProgram.h>
 
 class MEOSineWave : public LightProgram {
- public:
-  MEOSineWave(G35& g35);
-  uint32_t Do();
+	public:
+		MEOSineWave(G35& g35);
+		uint32_t Do();
+		uint32_t Wheel(uint16_t WheelPos);
 
- private:
-  bool preFill_;
-  bool strobe_;
-  uint8_t wait_;
-  uint32_t colorMain_;
-  uint32_t colorHi_;
-  uint32_t colorLo_;
-  uint8_t wavesPerString_;
-  uint32_t step_;
+	private:
+		bool preFill_;
+		bool strobe_;
+		uint8_t wait_;
+		uint32_t colorMain_;
+		uint32_t colorHi_;
+		uint32_t colorLo_;
+		uint8_t wavesPerString_;
+		bool rainbowMain_;
+		uint32_t step_;
+		uint32_t step2_;
 };
 
 #endif
