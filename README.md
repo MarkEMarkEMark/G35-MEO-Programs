@@ -25,7 +25,7 @@ Has new MEOPrograms.cpp / .h with more imaginative programs from other light pro
     - colorMain_ : the main colour to use (e.g. COLOR(15,0,0))
     - colorHi_ : the peak of the wave (e.g. COLOR(12,12,12))
     - colourLo_ : the trough of the wave (e.g. COLOR(0,0,0)) - these colours give a nice candy strip effect
-       - ToDo: add a rainbowWave parameter which cycles colorMain
+    - rainbowMain_: parameter which rainbow cycles colorMain
 
 
 I've a lot of parameters in the programs - however, not being a C++ programmer, I've no idea how to change these from the calling select case statements in MEOProgram.cpp. If anyone can point me in the right direction, I'd be grateful. I'd like to be able to change these parameters from push buttons that I've set up. I'm not posting the code for that and I wan't to keep this repository simple for the time being.
