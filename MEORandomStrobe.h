@@ -29,6 +29,7 @@ class MEORandomStrobe : public LightProgram {
 		uint32_t colorMain_;
 		uint32_t colorFlash_;
 		bool rainbowFlash_; //instead of single strobe color, will cycle through colour wheel
+		bool rainbowMain_; //instead of single background color, will cycle through colour wheel (complimentary colour to flash)
 		bool rainbowFrame_; //if rainbow flash, then whether cycles colour after all bulbs flashed or with each bulb flashed
 		uint8_t step_;
 		uint8_t myBulb_;

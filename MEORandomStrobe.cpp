@@ -12,8 +12,10 @@
 
 #include <MEORandomStrobe.h>
 
-MEORandomStrobe::MEORandomStrobe(G35& g35) : LightProgram(g35), preFill_(true), strobe_(true), wait_(10), noAtATime_(1), colorMain_(COLOR(0,0,0)), colorFlash_(COLOR(15,15,15)), rainbowFlash_(true), rainbowFrame_(true), step_(0), myBulb_(0) {
+MEORandomStrobe::MEORandomStrobe(G35& g35) : LightProgram(g35), preFill_(true), strobe_(true), wait_(10), noAtATime_(1), colorMain_(COLOR(0,0,4)), colorFlash_(COLOR(15,15,15)), rainbowFlash_(false), rainbowMain_(false), rainbowFrame_(false), step_(0), myBulb_(0) {
 }
+
+//ToDo: reduce brightness of rainbowMain_ colour to increase contrast
 
 uint32_t MEORandomStrobe::Do() {
 	////// This commented out code works, but ideally needs to be outside this class and passed in, because as is the random sequence changes so it's no longer non-repeating
@@ -58,7 +60,13 @@ uint32_t MEORandomStrobe::Do() {
 	if (preFill_)
 	{
 		preFill_ = false;
-		g35_.fill_color(0, light_count_, G35::MAX_INTENSITY, colorMain_);
+		if (rainbowMain_)
+		{
+			g35_.fill_color(0, light_count_, G35::MAX_INTENSITY, MEORandomStrobe::Wheel((step_ + 24) % 48));
+		} else {
+			g35_.fill_color(0, light_count_, G35::MAX_INTENSITY, colorMain_);
+		}
+		
 	}
 
 	//turn on (set to colorFlash) and off (set to colorMain) the random bulbs
@@ -86,7 +94,12 @@ uint32_t MEORandomStrobe::Do() {
 			simultan = 0;
 			do
 			{
-				g35_.fill_color(myBulbs[myBulb_], 1, G35::MAX_INTENSITY, colorMain_);
+				if (rainbowMain_)
+				{
+					g35_.fill_color(myBulbs[myBulb_], 1, G35::MAX_INTENSITY, MEORandomStrobe::Wheel((step_ + 24) % 48));
+				} else {
+					g35_.fill_color(myBulbs[myBulb_], 1, G35::MAX_INTENSITY, colorMain_);
+				}
 				myBulb_++;
 				simultan++;
 			} while (simultan < noAtATime_);
