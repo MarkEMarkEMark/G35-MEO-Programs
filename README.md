@@ -28,3 +28,5 @@ Has new MEOPrograms.cpp / .h with more imaginative programs from other light pro
 
 
 I've a lot of parameters in the programs - however, not being a C++ programmer, I've no idea how to change these from the calling select case statements in MEOProgram.cpp. If anyone can point me in the right direction, I'd be grateful. I'd like to be able to change these parameters from push buttons that I've set up. I'm not posting the code for that and I wan't to keep this repository simple for the time being.
+
+Finally, I've added my the .ino file I use on my Arduino Mega. This wires up 9 buttons to the analog pins (if not using a Mega, then re-map these pins). Currently only the first 2 buttons do anything - change the program up and down. The missing programs from here are in Sowbug's hub. Eventually this will be self contained.
