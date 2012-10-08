@@ -7,10 +7,9 @@ Uses https://github.com/sowbug/G35Arduino as a framework.
 
 Has new MEOPrograms.cpp / .h with more imaginative programs from other light projects and my own original work. The other light project programs have been modified with more options thought up by me.
 
-- MEORainbow1 (based on Adafruit's LED light strip sample code: https://github.com/adafruit/LPD8806)
+- MEORainbow (based on Adafruit's LED light strip sample code: https://github.com/adafruit/LPD8806)
     - wait_: how fast/slow
-- MEORainbow2 (based on Adafruit's LED light strip sample code: https://github.com/adafruit/LPD8806)
-    - wait_: how fast/slow
+    - frame_ : spread across string
 - MEORandomStrobe (my own)
     - noAtATime_ : how many simultaneous lights (don't do too many - between 1 and 5 is good)
     - colorMain_ : background colour (a nice start is dark blue - COLOR(0,0,4))
