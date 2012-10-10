@@ -10,6 +10,7 @@ Has new MEOPrograms.cpp / .h with more imaginative programs from other light pro
 - MEORainbow (based on Adafruit's LED light strip sample code: https://github.com/adafruit/LPD8806)
     - wait_: how fast/slow
     - frame_ : spread across string
+    - type_: 0 to 3 - 0 is full rainbow. 1 is a nice autumnal red/green. 2 is green/blue. 3 is blue/red 
 - MEORandomStrobe (my own)
     - noAtATime_ : how many simultaneous lights (don't do too many - between 1 and 5 is good)
     - colorMain_ : background colour (a nice start is dark blue - COLOR(0,0,4))
