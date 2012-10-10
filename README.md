@@ -27,7 +27,8 @@ Has new MEOPrograms.cpp / .h with more imaginative programs from other light pro
     - rainbowMain_: parameter which rainbow cycles colorMain
 - MEOColorPhasing (my own)
     This one is really interesting and evolved by accident. I was messing around with true colour wheels (unlike the MEORainbow program which is actually a 'colour triangle' because of the linear steps) I wasn't able to get the effect that I was trying for (mostly because the G35s are 4 bit colour and they are not evenly set per channel). But by playing around with the frequency and phase, I got this nice effect. It starts out white, then the colours move and get more and more saturated. It never saturates beyond a pastel effect, but it looks really nice anyway
-- MEOChasing is a simple programmable chase effect that has been pre-programmed to do a nice blue-purple chasing effect. Others have been coded too, and they are pretty easy to code your own.
+- MEOChasing (my own)
+    This is a simple programmable chase effect that has been pre-programmed to do a nice blue-purple chasing effect. Others have been coded too, and they are pretty easy to code your own.
 
 I've a lot of parameters in the programs - however, not being a C++ programmer, I've no idea how to change these from the calling select case statements in MEOProgram.cpp. If anyone can point me in the right direction, I'd be grateful. I'd like to be able to change these parameters from push buttons that I've set up. I'm not posting the code for that and I wan't to keep this repository simple for the time being.
 
