@@ -57,9 +57,6 @@ void setup() {
 	lights_1.enumerate();
 	lights_2.enumerate();
 
-	//lights_1.do_test_patterns();
-	//lights_2.do_test_patterns();
-
 	string_group.AddString(&lights_1);
 	string_group.AddString(&lights_2);
 

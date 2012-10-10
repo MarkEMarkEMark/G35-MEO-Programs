@@ -14,24 +14,17 @@
 #define INCLUDE_G35_MEO_PROGRAMS_H
 
 #include <LightProgram.h>
-#include <Meteorite.h>
-#include <Twinkle.h>
-#include <RedGreenChase.h>
-#include <Pulse.h>
-#include <Orbit.h>
-#include <Cylon.h>
-#include <Stereo.h>
-#include <Inchworm.h>
 #include <MEORainbow.h>
 #include <MEOSteadyWarmWhite.h>
 #include <MEORandomStrobe.h>
 #include <MEOSineWave.h>
 #include <MEOSimplexNoise.h>
-#include <ChasingWhiteRedBlue.h>
+#include <MEOChasing.h>
+#include <MEOColorPhasing.h>
 
 class MEOProgramGroup : public LightProgramGroup {
 	public:
-		enum {ProgramCount = 15};
+		enum {ProgramCount = 7};
 
 		virtual LightProgram* CreateProgram(G35& lights, uint8_t program_index);
 };
