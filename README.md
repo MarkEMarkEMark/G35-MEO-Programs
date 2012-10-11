@@ -1,6 +1,11 @@
 G35-MEO-Programs
 ================
 
+ToDo:
+- rename my stuff, so doesn't class with Sowbug's version
+- add button for random program/variation every minute
+
+
 This is heavily based on sowbug's G35 Ardunino library (https://github.com/sowbug/G35Arduino)
 
 However, rather than being timer based, it requires 4 push buttons to set the programs. Also it has totally new MEOPrograms.cpp / .h with more imaginative programs from other light projects I've come acress including my own original work and modifications.
@@ -116,4 +121,4 @@ There are parameters that I've allowed for that I'll eventually make into sub-va
 
 Feel free to email me if you have any problems setting up.
 
-Thanks to sowbug and, of course, Robert Quattlebaum (DeepDarc - http://www.deepdarc.com/2010/11/27/hacking-christmas-lights/)
+Thanks to sowbug (Mike Tsao) and, of course, Robert Quattlebaum (DeepDarc - http://www.deepdarc.com/2010/11/27/hacking-christmas-lights/) and Scott Harris and Paul Martis
