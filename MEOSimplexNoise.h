@@ -18,7 +18,7 @@
 
 class MEOSimplexNoise : public LightProgram {
  public:
-	MEOSimplexNoise(G35& g35);
+	MEOSimplexNoise(G35& g35, uint8_t pattern);
 	uint32_t Do();
 
  private:
@@ -35,6 +35,7 @@ class MEOSimplexNoise : public LightProgram {
 	float spaceinc_;
 	float timeinc_;
 	float yoffset_;
+	uint8_t pattern_;
 };
 
 #endif

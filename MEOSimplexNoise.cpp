@@ -14,7 +14,7 @@
 #include <MEOSimplexNoise.h>
 
 
-MEOSimplexNoise::MEOSimplexNoise(G35& g35) : LightProgram(g35), rMult_(0.0), gMult_(1.0), bMult_(0.0), spaceinc_(0.1), timeinc_(0.08), yoffset_(0.0) {
+MEOSimplexNoise::MEOSimplexNoise(G35& g35, uint8_t pattern) : LightProgram(g35, pattern), rMult_(1.0), gMult_(1.0), bMult_(1.0), spaceinc_(0.1), timeinc_(0.08), yoffset_(0.0), pattern_(pattern) {
 }
 
 #define PI 3.14159265
@@ -38,6 +38,24 @@ uint32_t MEOSimplexNoise::Do() {
 	float bulbArray_hue[light_count_ + 1];
 	float bulbArray_brightness[light_count_ + 1];
 	int node_spacing = light_count_ / numSpacing;
+
+	uint8_t patternLimited = pattern_ % 13;
+	switch (patternLimited) {
+		case 0: rMult_ = 1.0; gMult_ = 1.0; bMult_ = 1.0; break;
+		case 1: rMult_ = 1.0; gMult_ = 0.0; bMult_ = 1.0; break;
+		case 2: rMult_ = 0.0; gMult_ = 1.0; bMult_ = 1.0; break;
+		case 3: rMult_ = 1.0; gMult_ = 1.0; bMult_ = 0.0; break;
+		case 4: rMult_ = 1.0; gMult_ = 0.0; bMult_ = 0.0; break;
+		case 5: rMult_ = 0.0; gMult_ = 1.0; bMult_ = 0.0; break;
+		case 6: rMult_ = 0.0; gMult_ = 0.0; bMult_ = 1.0; break;
+		case 7: rMult_ = 0.2; gMult_ = 0.0; bMult_ = 1.0; break;
+		case 8: rMult_ = 0.0; gMult_ = 0.2; bMult_ = 1.0; break;
+		case 9: rMult_ = 1.0; gMult_ = 0.2; bMult_ = 0.0; break;
+		case 10: rMult_ = 1.0; gMult_ = 0.0; bMult_ = 0.2; break;
+		case 11: rMult_ = 0.0; gMult_ = 1.0; bMult_ = 0.2; break;
+		case 12: rMult_ = 0.2; gMult_ = 1.0; bMult_ = 0.0; break;
+	}
+
 
 // MEO: put happyinmotion's control constants (timeinc, spaceinc, yoffset, repeats) into function as parameters
 	// added more control to colours by putting in multipier for each of R G B (0.0 to 1.0)

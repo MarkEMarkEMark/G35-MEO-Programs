@@ -39,7 +39,7 @@ uint8_t program_index = 0; //the main program - rainbow/simplexnoise etc
 uint8_t pattern = 0; //the sub-program - colour scheme etc.
 
 LightProgram* CreateProgram(uint8_t program_index, uint8_t pattern) {
-	return programs.CreateProgram(string_group, program_index, pattern);
+	return programs.CreateProgram(string_group, 0,0);// program_index, pattern);
 }
 
 // How long each program should run.

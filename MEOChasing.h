@@ -15,7 +15,7 @@
 
 class MEOChasing : public LightProgram {
 	public:
-		MEOChasing(G35& g35);
+		MEOChasing(G35& g35, uint8_t pattern);
 		uint32_t Do();
 		static color_t PastelRGB(uint16_t sequence);
 		static color_t RGBY(uint16_t sequence);
@@ -34,6 +34,14 @@ class MEOChasing : public LightProgram {
 		static color_t RCGMBY(uint16_t sequence);
 		static color_t PurplyBlue(uint16_t sequence);
 		static color_t Valentines(uint16_t sequence);
+		static color_t BlueTriad(uint16_t sequence);
+		static color_t BlueBronze(uint16_t sequence);
+		static color_t BlueTetrad(uint16_t sequence);
+		static color_t PurpleTetrad(uint16_t sequence);
+		static color_t GreenTetrad(uint16_t sequence);
+		static color_t GreenAccentedAlalogic(uint16_t sequence);
+		static color_t RedAccentedAlalogic(uint16_t sequence);
+		static color_t BlueAccentedAlalogic(uint16_t sequence);
 
 	private:
 		uint8_t count_;

@@ -15,7 +15,7 @@
 
 #include <LightProgram.h>
 #include <MEORainbow.h>
-#include <MEOSteadyWarmWhite.h>
+#include <MEOWhites.h>
 #include <MEORandomStrobe.h>
 #include <MEOSineWave.h>
 #include <MEOSimplexNoise.h>
@@ -26,7 +26,7 @@ class MEOProgramGroup : public LightProgramGroup {
 	public:
 		enum {ProgramCount = 7};
 
-		virtual LightProgram* CreateProgram(G35& lights, uint8_t program_index);
+		virtual LightProgram* CreateProgram(G35& lights, uint8_t program_index, uint8_t pattern);
 };
 
 #endif  // INCLUDE_G35_MEO_PROGRAMS_H

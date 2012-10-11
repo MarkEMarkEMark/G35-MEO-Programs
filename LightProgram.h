@@ -19,7 +19,7 @@
 // programs. An example is "Chasing Red, White, and Blue."
 class LightProgram {
  public:
- LightProgram(G35& g35)
+ LightProgram(G35& g35, uint8_t pattern)
    : g35_(g35), light_count_(g35.get_light_count()),
     bulb_frame_(g35.get_bulb_frame()) {}
 
@@ -37,7 +37,7 @@ class LightProgram {
 // statement for every set of programs they're interested in including.
 class LightProgramGroup {
  public:
-  virtual LightProgram* CreateProgram(G35& lights, uint8_t program_index) = 0;
+  virtual LightProgram* CreateProgram(G35& lights, uint8_t program_index, uint8_t pattern) = 0;
 };
 
 #endif  // INCLUDE_G35_LIGHT_PROGRAMS_H

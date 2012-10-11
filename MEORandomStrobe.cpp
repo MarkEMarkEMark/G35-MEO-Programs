@@ -12,12 +12,27 @@
 
 #include <MEORandomStrobe.h>
 
-MEORandomStrobe::MEORandomStrobe(G35& g35) : LightProgram(g35), preFill_(true), strobe_(true), wait_(10), noAtATime_(1), colorMain_(COLOR(0,0,4)), colorFlash_(COLOR(15,15,15)), rainbowFlash_(false), rainbowMain_(false), rainbowFrame_(false), step_(0), myBulb_(0) {
+MEORandomStrobe::MEORandomStrobe(G35& g35, uint8_t pattern) : LightProgram(g35, pattern), preFill_(false), strobe_(true), wait_(25), noAtATime_(1), colorMain_(COLOR(0,0,4)), colorFlash_(COLOR(15,15,15)), rainbowFlash_(false), rainbowMain_(false), rainbowFrame_(false), step_(0), myBulb_(0), pattern_(pattern) {
 }
 
 //ToDo: reduce brightness of rainbowMain_ colour to increase contrast
 
 uint32_t MEORandomStrobe::Do() {
+
+	uint8_t patternLimited = pattern_ % 8;
+	switch (patternLimited) {
+		case 0: rainbowMain_ = false; rainbowFlash_ = false; rainbowFrame_ = false; colorMain_ = COLOR(0,0,0); colorFlash_ = COLOR(15,15,15); break;
+		case 1: rainbowMain_ = false; rainbowFlash_ = false; rainbowFrame_ = false; colorMain_ = COLOR(0,0,4); colorFlash_ = COLOR(15,15,15); break;
+		case 2: rainbowMain_ = false; rainbowFlash_ = false; rainbowFrame_ = false; colorMain_ = COLOR(4,0,0); colorFlash_ = COLOR(15,15,15); break;
+		case 3: rainbowMain_ = false; rainbowFlash_ = false; rainbowFrame_ = false; colorMain_ = COLOR(0,4,0); colorFlash_ = COLOR(15,15,15); break;
+		case 4: rainbowMain_ = false; rainbowFlash_ = true; rainbowFrame_ = true; colorMain_ = COLOR(0,0,0); break;
+		case 5: rainbowMain_ = false; rainbowFlash_ = true; rainbowFrame_ = false; colorMain_ = COLOR(0,0,0); break;
+		case 6: rainbowMain_ = true; rainbowFlash_ = false; rainbowFrame_ = true; colorFlash_ = COLOR(15,15,15); break;
+		case 7: rainbowMain_ = true; rainbowFlash_ = false; rainbowFrame_ = false; colorFlash_ = COLOR(15,15,15); break;
+		case 8: rainbowMain_ = true; rainbowFlash_ = true; rainbowFrame_ = true; break;
+	}
+	
+	
 	////// This commented out code works, but ideally needs to be outside this class and passed in, because as is the random sequence changes so it's no longer non-repeating
 	////// I've no idea how to do that, so I'm replacing with pre-generated random arrays
 	////// and a choice between 50 / 100 bulbs

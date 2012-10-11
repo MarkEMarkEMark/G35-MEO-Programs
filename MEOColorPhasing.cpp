@@ -15,13 +15,50 @@
 
 #define PI 3.14159265
 
-MEOColorPhasing::MEOColorPhasing(G35& g35) : LightProgram(g35), wait_(0), frequencyR_(0.3333), frequencyG_(0.3333), frequencyB_(0.3333),
-                             phaseR_(0), phaseG_(2*PI/3), phaseB_(4*PI/3), center_(8), width_(7), fStep_(0), pStep_(0), fForward_(true) {
+MEOColorPhasing::MEOColorPhasing(G35& g35, uint8_t pattern) : LightProgram(g35, pattern), wait_(0), frequencyR_(0.06), frequencyG_(0.06), frequencyB_(0.06),
+                             phaseR_(0), phaseG_(2*PI/3), phaseB_(4*PI/3), center_(8), width_(7), fStep_(0), pStep_(0), fForward_(true), turn_(0) {
 }
 
 // neat rainbow phase 0, 2*PI/3, 4*PI/3 (120deg = 2PI/3, so 0, 120, 240)
 
 uint32_t MEOColorPhasing::Do() {
+
+	// this just very subtly changes the pattern slightly each time the frequency starts again
+	switch (turn_)
+	{
+	case 0: //RGB
+		phaseR_ = 0;
+		phaseG_ = (2*PI/360) * pStep_;
+		phaseB_ = (4*PI/360) * pStep_;
+		break;
+	case 1: //BGR
+		phaseB_ = 0;
+		phaseG_ = (2*PI/360) * pStep_;
+		phaseR_ = (4*PI/360) * pStep_;
+		break;
+	case 2: //GBR
+		phaseG_ = 0;
+		phaseB_ = (2*PI/360) * pStep_;
+		phaseR_ = (4*PI/360) * pStep_;
+		break;
+	case 3: //GRB
+		phaseG_ = 0;
+		phaseR_ = (2*PI/360) * pStep_;
+		phaseB_ = (4*PI/360) * pStep_;
+		break;
+	case 4: //BRG
+		phaseB_ = 0;
+		phaseR_ = (2*PI/360) * pStep_;
+		phaseG_ = (4*PI/360) * pStep_;
+		break;
+	case 5: //RBG
+		phaseR_ = 0;
+		phaseB_ = (2*PI/360) * pStep_;
+		phaseG_ = (4*PI/360) * pStep_;
+		break;
+	}
+
+	phaseR_ = 0;
 	phaseG_ = (2*PI/360) * pStep_;
 	phaseB_ = (4*PI/360) * pStep_;
 
@@ -45,6 +82,11 @@ uint32_t MEOColorPhasing::Do() {
 	if (fStep_ == -1)
 	{
 		fForward_ = true;
+		turn_++;
+		if (turn_ == 6)
+		{
+			turn_ = 0;
+		}
 	}
 
 	if (fForward_)
@@ -67,21 +109,3 @@ uint32_t MEOColorPhasing::Do() {
 
 	return bulb_frame_;
 }
-
-//uint32_t MEOColorPhasing::MakeColorGradient(frequency1, frequency2, frequency3,
- //                            phase1, phase2, phase3,
- //                            center, width, len)
-  //{
-    //for (var i = 0; i < len; ++i)
-    //{
-       //var red = Math.sin(frequency1*i + phase1) * width + center;
-       //var grn = Math.sin(frequency2*i + phase2) * width + center;
-       //var blu = Math.sin(frequency3*i + phase3) * width + center;
-       //document.write( '<font color="' + RGB2Color(red,grn,blu) + '">&#9608;</font>');
-    //}
- // }
-
-//function RGB2Color(r,g,b)
-//  {
-//    return '#' + byte2Hex(r) + byte2Hex(g) + byte2Hex(b);
-//  }

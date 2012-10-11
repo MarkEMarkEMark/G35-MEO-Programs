@@ -18,7 +18,7 @@
 
 class MEORainbow : public LightProgram {
 	public:
-		MEORainbow(G35& g35);
+		MEORainbow(G35& g35, uint8_t pattern);
 		uint32_t Do();
 		uint32_t Wheel(uint16_t WheelPos);
 		uint32_t LineRG(uint16_t WheelPos);
@@ -27,8 +27,7 @@ class MEORainbow : public LightProgram {
 
 	private:
 		uint8_t wait_;
-		uint8_t type_;
-		bool frame_;
+		uint8_t pattern_;
 		uint8_t step_;
 };
 

@@ -17,7 +17,7 @@
 
 class MEORandomStrobe : public LightProgram {
 	public:
-		MEORandomStrobe(G35& g35);
+		MEORandomStrobe(G35& g35, uint8_t pattern);
 		uint32_t Do();
 		uint32_t Wheel(uint16_t WheelPos);
 
@@ -33,6 +33,7 @@ class MEORandomStrobe : public LightProgram {
 		bool rainbowFrame_; //if rainbow flash, then whether cycles colour after all bulbs flashed or with each bulb flashed
 		uint8_t step_;
 		uint8_t myBulb_;
+		uint8_t pattern_;
 };
 
 #endif

@@ -11,18 +11,19 @@
   See README for complete attributions.
 */
 
-#ifndef INCLUDE_G35_PROGRAMS_MEO_STEADY_WARM_WHITE_H
-#define INCLUDE_G35_PROGRAMS_MEO_STEADY_WARM_WHITE_H
+#ifndef INCLUDE_G35_PROGRAMS_MEO_WHITES_H
+#define INCLUDE_G35_PROGRAMS_MEO_WHITES_H
 
 #include <LightProgram.h>
 
-class MEOSteadyWarmWhite : public LightProgram {
+class MEOWhites : public LightProgram {
  public:
-  MEOSteadyWarmWhite(G35& g35);
+  MEOWhites(G35& g35, uint8_t pattern);
   uint32_t Do();
 
  private:
   uint8_t intensity_;
+  uint8_t pattern_;
 };
 
 #endif

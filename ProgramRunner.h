@@ -26,11 +26,12 @@
 
 class ProgramRunner {
  public:
- ProgramRunner(LightProgram* (*program_creator)(uint8_t program_index),
+ ProgramRunner(LightProgram* (*program_creator)(uint8_t program_index, uint8_t pattern),
 	       uint8_t program_count, unsigned long program_duration_seconds)
    : program_count_(program_count),
     program_duration_seconds_(program_duration_seconds),
-    program_index_(program_count_ - 1),
+    program_index_(-1),
+	pattern_(0),
     next_switch_millis_(0),
     program_creator_(program_creator),
     program_(NULL) {}
@@ -45,41 +46,76 @@ class ProgramRunner {
     }
   }
 
-  void switch_program(bool up) {
+ void switch_program(bool up) {
     unsigned long now = millis();
     next_switch_millis_ = now + program_duration_seconds_ * 1000;
     next_do_millis_ = now;
+
+	Serial.print("ProgramRunner: ");
+	Serial.print("    ProgramIndex_: ");
+	Serial.print(program_index_);
+	Serial.print("    (program_count_):");
+	Serial.print(program_count_);
+	Serial.print("    Pattern_: ");
+	Serial.println(pattern_);
 
 	if (up)
 	{
 		if (++program_index_ == program_count_) {
 			program_index_ = 0;
 		}
-	} else { //down - doesn't work at boundry
-		//Serial.print("** "); Serial.println(program_index_);
+	} else {
 		if (program_index_ == 0)
 		{
-			//Serial.println("******");
 			program_index_ = program_count_ - 1;
 		} else {
 			--program_index_;
 		}
 	}
 
-
     if (program_ != NULL) {
       delete program_;
     }
-    program_ = program_creator_(program_index_);
+    program_ = program_creator_(program_index_, pattern_);
+  }
+
+ void switch_pattern(bool up) {
+	Serial.print("ProgramRunnerSP: ");
+	Serial.print("    ProgramIndex_: ");
+	Serial.print(program_index_);
+	Serial.print("    (program_count_):");
+	Serial.print(program_count_);
+	Serial.print("    Pattern_: ");
+	Serial.println(pattern_);
+
+	if (up)
+	{
+		if (++pattern_ == 31) {
+			pattern_ = 0;
+		}
+	} else {
+		if (pattern_ == 0)
+		{
+			pattern_ = pattern_ - 1;
+		} else {
+			--pattern_;
+		}
+	}
+
+	if (program_ != NULL) {
+      delete program_;
+    }
+    program_ = program_creator_(program_index_, pattern_);
   }
 
  private:
   uint8_t program_count_;
   unsigned long program_duration_seconds_;
   uint8_t program_index_;
+  uint8_t pattern_;
   unsigned long next_switch_millis_;
   unsigned long next_do_millis_;
-  LightProgram* (*program_creator_)(uint8_t program_index);
+  LightProgram* (*program_creator_)(uint8_t program_index, uint8_t pattern);
   LightProgram* program_;
 };
 

@@ -13,12 +13,24 @@
 
 #include <MEOSineWave.h>
 
-MEOSineWave::MEOSineWave(G35& g35) : LightProgram(g35), preFill_(true), strobe_(true), wait_(0), colorMain_(COLOR(0,0,15)), colorHi_(COLOR(12,12,12)), colorLo_(COLOR(0,0,0)), wavesPerString_(2), rainbowMain_(true), step_(0), step2_(0) {
+MEOSineWave::MEOSineWave(G35& g35, uint8_t pattern) : LightProgram(g35, pattern), preFill_(true), strobe_(true), wait_(0), colorMain_(COLOR(0,0,15)), colorHi_(COLOR(12,12,12)), colorLo_(COLOR(0,0,0)), wavesPerString_(2), rainbowMain_(true), step_(0), step2_(0), pattern_(pattern) {
 }
 
 #define PI 3.14159265
 
 uint32_t MEOSineWave::Do() {
+
+	uint8_t patternLimited = pattern_ % 7;
+	switch (patternLimited) {
+		case 0: rainbowMain_ = false; colorMain_ = COLOR(15,0,0); break;
+		case 1: rainbowMain_ = false; colorMain_ = COLOR(0,15,0); break;
+		case 2: rainbowMain_ = false; colorMain_ = COLOR(0,0,15); break;
+		case 3: rainbowMain_ = false; colorMain_ = COLOR(8,8,0); break;
+		case 4: rainbowMain_ = false; colorMain_ = COLOR(8,0,8); break;
+		case 5: rainbowMain_ = false; colorMain_ = COLOR(0,8,8); break;
+		case 6: rainbowMain_ = true; break;
+	}
+	
 	float y;
 	byte  rMain, gMain, bMain, rOut, gOut, bOut, rhi, ghi, bhi, rlo, glo, blo, rRainbow, gRainbow, bRainbow;
 

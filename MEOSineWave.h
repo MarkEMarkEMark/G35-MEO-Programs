@@ -17,7 +17,7 @@
 
 class MEOSineWave : public LightProgram {
 	public:
-		MEOSineWave(G35& g35);
+		MEOSineWave(G35& g35, uint8_t pattern);
 		uint32_t Do();
 		uint32_t Wheel(uint16_t WheelPos);
 
@@ -32,6 +32,7 @@ class MEOSineWave : public LightProgram {
 		bool rainbowMain_;
 		uint32_t step_;
 		uint32_t step2_;
+		uint8_t pattern_;
 };
 
 #endif

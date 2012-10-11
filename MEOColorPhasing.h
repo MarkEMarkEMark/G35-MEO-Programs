@@ -18,7 +18,7 @@
 
 class MEOColorPhasing : public LightProgram {
 	public:
-		MEOColorPhasing(G35& g35);
+		MEOColorPhasing(G35& g35, uint8_t pattern);
 		uint32_t Do();
 
 	private:
@@ -34,6 +34,7 @@ class MEOColorPhasing : public LightProgram {
 		int fStep_;
 		int pStep_;
 		bool fForward_;
+		uint8_t turn_;
 };
 
 #endif
