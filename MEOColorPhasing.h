@@ -35,6 +35,7 @@ class MEOColorPhasing : public MEOLightProgram {
 		int pStep_;
 		bool fForward_;
 		uint8_t turn_;
+		uint8_t pattern_;
 };
 
 #endif

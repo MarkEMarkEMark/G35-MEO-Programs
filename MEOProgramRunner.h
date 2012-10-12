@@ -39,25 +39,37 @@ class MEOProgramRunner {
   void loop() {
     unsigned long now = millis();
     if (now >= next_switch_millis_) {
-      switch_program(true); //hopefully this never runs, as timer is really long
+      random_program();
     }
     if (now >= next_do_millis_) {
       next_do_millis_ = now + program_->Do();
     }
   }
 
+ void turn_off() {
+	program_ = program_creator_(255, 0);
+ }
+
+ void random_program() {
+	unsigned long now = millis();
+	next_switch_millis_ = now + program_duration_seconds_ * 1000;
+	next_do_millis_ = now;
+
+	//randomSeed(analogRead(15));
+	//would be nice to make this non-repeating, but that would require remembering every variation of every program
+	uint8_t randProg = random(254);
+	uint8_t randVar = random(254);
+
+	if (program_ != NULL) {
+      delete program_;
+    }
+	program_ = program_creator_(randProg, randVar);
+ }
+
  void switch_program(bool up) {
     unsigned long now = millis();
     next_switch_millis_ = now + program_duration_seconds_ * 1000;
     next_do_millis_ = now;
-
-	Serial.print("ProgramRunner: ");
-	Serial.print("    ProgramIndex_: ");
-	Serial.print(program_index_);
-	Serial.print("    (program_count_):");
-	Serial.print(program_count_);
-	Serial.print("    Pattern_: ");
-	Serial.println(pattern_);
 
 	if (up)
 	{
@@ -80,14 +92,6 @@ class MEOProgramRunner {
   }
 
  void switch_pattern(bool up) {
-	Serial.print("ProgramRunnerSP: ");
-	Serial.print("    ProgramIndex_: ");
-	Serial.print(program_index_);
-	Serial.print("    (program_count_):");
-	Serial.print(program_count_);
-	Serial.print("    Pattern_: ");
-	Serial.println(pattern_);
-
 	if (up)
 	{
 		if (++pattern_ == 31) {
@@ -108,9 +112,10 @@ class MEOProgramRunner {
     program_ = program_creator_(program_index_, pattern_);
   }
 
+unsigned long program_duration_seconds_;
+
  private:
   uint8_t program_count_;
-  unsigned long program_duration_seconds_;
   uint8_t program_index_;
   uint8_t pattern_;
   unsigned long next_switch_millis_;

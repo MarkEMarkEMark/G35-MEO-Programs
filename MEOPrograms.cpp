@@ -14,16 +14,19 @@
 
 MEOLightProgram* MEOProgramGroup::CreateProgram(MEOG35& lights,
                                               uint8_t program_index, uint8_t pattern) {
-	Serial.print("LightProgram Pattern: ");
-	Serial.println(pattern);
-	switch (program_index % ProgramCount) {
-		case 0: return new MEOWhites(lights, pattern);
-		case 1: return new MEORainbow(lights, pattern);
-		case 2: return new MEORandomStrobe(lights, pattern);
-		case 3: return new MEOSimplexNoise(lights, pattern);
-		case 4: return new MEOSineWave(lights, pattern);
-		case 5: return new MEOChasing(lights, pattern);
-		case 6: return new MEOColorPhasing(lights, pattern);
+	if (program_index == 255)
+	{
+		return new MEOSwitchOff(lights);
+	} else {
+		switch (program_index % ProgramCount) {
+			case 0: return new MEOWhites(lights, pattern);
+			case 1: return new MEORainbow(lights, pattern);
+			case 2: return new MEORandomStrobe(lights, pattern);
+			case 3: return new MEOSimplexNoise(lights, pattern);
+			case 4: return new MEOSineWave(lights, pattern);
+			case 5: return new MEOChasing(lights, pattern);
+			case 6: return new MEOColorPhasing(lights, pattern);
+		}
 	}
   // not reached
   return NULL;

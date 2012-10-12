@@ -19,18 +19,20 @@
 //if you want, you can even run the button checker in the background, which can make for a very easy interface. Remember that you’ll need to clear “just pressed”, etc. after checking or it will be “stuck” on
 #define DEBOUNCE 10  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
 // here is where we define the buttons that we'll use. button "1" is the first, button "6" is the 6th, etc
-byte buttons[] = {54, 55, 56, 57, 58, 59, 60, 61, 62}; // the analog A0-15 pins are also known as 54+ on Mega
+byte buttons[] = {54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64}; // the analog A0-15 pins are also known as 54+ on Mega
 // This handy macro lets us determine how big the array up above is, by checking the size
 #define NUMBUTTONS sizeof(buttons)
 // we will track if a button is just pressed, just released, or 'currently pressed' 
 volatile byte pressed[NUMBUTTONS], justpressed[NUMBUTTONS], justreleased[NUMBUTTONS];
 
+#define PROG_DUR_LONG 86400  //24 hours
+#define PROG_DUR_SHORT 120  //2 minutes
 
 //Lights initialisation
-MEOG35String lights_1(13, 50, 50, 0, false);
-MEOG35String lights_2(12, 50);
+MEOG35String lights_1(12, 50, 50, 0, false);
+MEOG35String lights_2(13, 50);
 
-const int PROGRAM_COUNT = MEOProgramGroup::ProgramCount ;//+ PlusProgramGroup::ProgramCount;
+const int PROGRAM_COUNT = MEOProgramGroup::ProgramCount;
 
 MEOProgramGroup programs;
 MEOG35StringGroup string_group;
@@ -38,14 +40,16 @@ MEOG35StringGroup string_group;
 uint8_t program_index = 0; //the main program - rainbow/simplexnoise etc
 uint8_t pattern = 0; //the sub-program - colour scheme etc.
 
+bool lightsOn = true;
+
 MEOLightProgram* CreateProgram(uint8_t program_index, uint8_t pattern) {
 	return programs.CreateProgram(string_group, program_index, pattern);
 }
 
 // How long each program should run.
-uint16_t PROGRAM_DURATION_SECONDS = 86400; //24 hours
+uint16_t programDuration = PROG_DUR_SHORT; //set for short first, as random is first
 
-MEOProgramRunner runner(CreateProgram, PROGRAM_COUNT, PROGRAM_DURATION_SECONDS);
+MEOProgramRunner runner(CreateProgram, PROGRAM_COUNT, programDuration);
 
 void setup() {
 	//Lights
@@ -97,30 +101,46 @@ void loop() {
 			Serial.println(pattern);
 
             switch (myButton) {
-				case 0:
+				case 0: //program Up
 					program_index++;
 					runner.switch_program(true);
 					break;
-				case 1:
+				case 1: //program Down
 					program_index--;
 					runner.switch_program(false);
 					break;
-				case 2:
+				case 2: //variation up
 					pattern++;
 					runner.switch_pattern(true);
 					break;
-				case 3:
+				case 3: //variation down
 					pattern--;
 					runner.switch_pattern(false);
 					break;
-				case 7:
-					if (PROGRAM_DURATION_SECONDS == 1)
+				case 9: //toggle random program
+					if (programDuration == PROG_DUR_SHORT)
 					{
-						PROGRAM_DURATION_SECONDS = 86400;
+						programDuration = PROG_DUR_LONG;
+						runner.program_duration_seconds_ = programDuration;
+						runner.switch_program(true);
 					} else {
-						PROGRAM_DURATION_SECONDS = 1;
+						programDuration = PROG_DUR_SHORT;
+						runner.program_duration_seconds_ = programDuration;
+						runner.random_program();
 					}
-					runner.switch_pattern(false);
+					break;
+				case 10: //toggle off / on
+					if (lightsOn)
+					{
+						lightsOn = false;
+						runner.program_duration_seconds_ = PROG_DUR_LONG;
+						runner.switch_program(true);
+						runner.turn_off();
+					} else {
+						lightsOn = true;
+						runner.program_duration_seconds_ = programDuration;
+						runner.switch_program(true);
+					}
 					break;
 			}
 		}

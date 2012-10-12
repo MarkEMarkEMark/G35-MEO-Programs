@@ -13,6 +13,7 @@
 #ifndef INCLUDE_G35_MEO_PROGRAMS_H
 #define INCLUDE_G35_MEO_PROGRAMS_H
 
+#include <MEOSwitchOff.h>
 #include <MEOLightProgram.h>
 #include <MEORainbow.h>
 #include <MEOWhites.h>
