@@ -3,7 +3,7 @@ G35-MEO-Programs
 
 This is heavily based on sowbug's G35 Ardunino library (https://github.com/sowbug/G35Arduino)
 
-However, as well as being timer based, it has the facility to manually change programs. 6 push buttons are requireds. Also it has totally new MEOPrograms.cpp / .h with more imaginative programs from other light projects I've come acress including my own original work and modifications.
+However, as well as being timer based, it has the facility to manually change programs. At least 6 push buttons are required. It features a totally new MEOPrograms.cpp / .h with more imaginative programs from other light projects I've come across including my own original work and modifications.
 
 This is preset for an Arduino Mega2560, but could easily be altered for other boards (sowbug has said that one program crashes his low memory board though)
 
