@@ -2,8 +2,9 @@ G35-MEO-Programs
 ================
 
 ToDo:
-- rename my stuff, so doesn't class with Sowbug's version
 - add button for random program/variation every minute
+- add sub-variation buttons (e.g. for chaser - Primary colours programs, and more subtle pleasing ones)
+- add variations to Phasing
 
 
 This is heavily based on sowbug's G35 Ardunino library (https://github.com/sowbug/G35Arduino)
