@@ -1,12 +1,6 @@
 G35-MEO-Programs
 ================
 
-ToDo:
-- add button for random program/variation every minute
-- add sub-variation buttons (e.g. for chaser - Primary colours programs, and more subtle pleasing ones)
-- add variations to Phasing
-
-
 This is heavily based on sowbug's G35 Ardunino library (https://github.com/sowbug/G35Arduino)
 
 However, as well as being timer based, it has the facility to manually change programs. 6 push buttons are requireds. Also it has totally new MEOPrograms.cpp / .h with more imaginative programs from other light projects I've come acress including my own original work and modifications.
