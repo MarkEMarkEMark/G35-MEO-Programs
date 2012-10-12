@@ -13,7 +13,7 @@
 
 #include <MEORainbow.h>
 
-MEORainbow::MEORainbow(G35& g35, uint8_t pattern) : LightProgram(g35, pattern), wait_(0), pattern_(pattern), step_(0) {
+MEORainbow::MEORainbow(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pattern), wait_(0), pattern_(pattern), step_(0) {
 }
 
 uint32_t MEORainbow::Do() {
@@ -24,35 +24,35 @@ uint32_t MEORainbow::Do() {
 		switch (patternLimited) {
 			case 0:
 				fourtyEight = false;
-				g35_.fill_color(i, 1, G35::MAX_INTENSITY, MEORainbow::LineRG((i + step_) % 32));
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineRG((i + step_) % 32));
 				break;
 			case 1:
 				fourtyEight = false;
-				g35_.fill_color(i, 1, G35::MAX_INTENSITY, MEORainbow::LineGB((i + step_) % 32));
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineGB((i + step_) % 32));
 				break;
 			case 2:
 				fourtyEight = false;
-				g35_.fill_color(i, 1, G35::MAX_INTENSITY, MEORainbow::LineBR((i + step_) % 32));
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineBR((i + step_) % 32));
 				break;
 			case 3:
 				fourtyEight = true;
-				g35_.fill_color(i, 1, G35::MAX_INTENSITY, MEORainbow::Wheel((i + step_) % 48));
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::Wheel((i + step_) % 48));
 				break;
 			case 4:
 				fourtyEight = false;
-				g35_.fill_color(i, 1, G35::MAX_INTENSITY, MEORainbow::LineRG(((i * 32 / light_count_) + step_) % 32));
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineRG(((i * 32 / light_count_) + step_) % 32));
 				break;
 			case 5:
 				fourtyEight = false;
-				g35_.fill_color(i, 1, G35::MAX_INTENSITY, MEORainbow::LineGB(((i * 32 / light_count_) + step_) % 32));
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineGB(((i * 32 / light_count_) + step_) % 32));
 				break;
 			case 6:
 				fourtyEight = false;
-				g35_.fill_color(i, 1, G35::MAX_INTENSITY, MEORainbow::LineBR(((i * 32 / light_count_) + step_) % 32));
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineBR(((i * 32 / light_count_) + step_) % 32));
 				break;
 			case 7:
 				fourtyEight = true;
-				g35_.fill_color(i, 1, G35::MAX_INTENSITY, MEORainbow::Wheel(((i * 48 / light_count_) + step_) % 48));
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::Wheel(((i * 48 / light_count_) + step_) % 48));
 				break;
 		}
 	}

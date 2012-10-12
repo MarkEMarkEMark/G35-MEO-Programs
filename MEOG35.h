@@ -7,8 +7,8 @@
   README for complete attributions.
 */
 
-#ifndef INCLUDE_G35_ARDUINO_H
-#define INCLUDE_G35_ARDUINO_H
+#ifndef INCLUDE_MEOG35_ARDUINO_H
+#define INCLUDE_MEOG35_ARDUINO_H
 
 #include <Arduino.h>
 
@@ -35,9 +35,9 @@
 
 // G35 is an abstract class representing a string of G35 lights of arbitrary
 // length. LightPrograms talk to this interface.
-class G35 {
+class MEOG35 {
  public:
-  G35();
+  MEOG35();
 
   enum { 
     // This is an abstraction leak. The choice was either to define a scaling
@@ -112,4 +112,4 @@ class G35 {
   virtual uint8_t get_broadcast_bulb() = 0;
 };
 
-#endif  // INCLUDE_G35_ARDUINO_H
+#endif  // INCLUDE_MEOG35_ARDUINO_H

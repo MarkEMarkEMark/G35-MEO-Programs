@@ -11,11 +11,11 @@
 #ifndef INCLUDE_G35_PROGRAMS_MEO_CHASING_H
 #define INCLUDE_G35_PROGRAMS_MEO_CHASING_H
 
-#include <LightProgram.h>
+#include <MEOLightProgram.h>
 
-class MEOChasing : public LightProgram {
+class MEOChasing : public MEOLightProgram {
 	public:
-		MEOChasing(G35& g35, uint8_t pattern);
+		MEOChasing(MEOG35& g35, uint8_t pattern);
 		uint32_t Do();
 		static color_t PastelRGB(uint16_t sequence);
 		static color_t RGBY(uint16_t sequence);

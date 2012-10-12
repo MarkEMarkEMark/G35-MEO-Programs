@@ -7,10 +7,10 @@
   README for complete attributions.
 */
 
-#ifndef INCLUDE_G35_STRING_GROUP_H
-#define INCLUDE_G35_STRING_GROUP_H
+#ifndef INCLUDE_MEOG35_STRING_GROUP_H
+#define INCLUDE_MEOG35_STRING_GROUP_H
 
-#include <G35.h>
+#include <MEOG35.h>
 
 // A G35StringGroup takes a set of G35 instances and presents them as a single
 // virtual light string of arbitrary length.
@@ -18,11 +18,11 @@
 // A LightProgram that is given a G35StringGroup will then be able to run
 // itself over the whole virtual string, without needing to know the details
 // of which physical string contains which logical bulb.
-class G35StringGroup : public G35 {
+class MEOG35StringGroup : public MEOG35 {
  public:
-  G35StringGroup();
+  MEOG35StringGroup();
 
-  void AddString(G35* g35);
+  void AddString(MEOG35* g35);
 
   virtual uint16_t get_light_count();
 
@@ -36,8 +36,8 @@ class G35StringGroup : public G35 {
   enum { MAX_STRINGS = 16 };
 
   uint8_t string_count_;
-  G35* strings_[MAX_STRINGS];
+  MEOG35* strings_[MAX_STRINGS];
   uint16_t string_offsets_[MAX_STRINGS];
 };
 
-#endif  // INCLUDE_G35_STRING_GROUP_H
+#endif  // INCLUDE_MEOG35_STRING_GROUP_H

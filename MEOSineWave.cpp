@@ -13,7 +13,7 @@
 
 #include <MEOSineWave.h>
 
-MEOSineWave::MEOSineWave(G35& g35, uint8_t pattern) : LightProgram(g35, pattern), preFill_(true), strobe_(true), wait_(0), colorMain_(COLOR(0,0,15)), colorHi_(COLOR(12,12,12)), colorLo_(COLOR(0,0,0)), wavesPerString_(2), rainbowMain_(true), step_(0), step2_(0), pattern_(pattern) {
+MEOSineWave::MEOSineWave(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pattern), preFill_(true), strobe_(true), wait_(0), colorMain_(COLOR(0,0,15)), colorHi_(COLOR(12,12,12)), colorLo_(COLOR(0,0,0)), wavesPerString_(2), rainbowMain_(true), step_(0), step2_(0), pattern_(pattern) {
 }
 
 #define PI 3.14159265
@@ -83,7 +83,7 @@ uint32_t MEOSineWave::Do() {
 				bOut = blo + (byte)((float)(bMain) * y);
 			}
 		}
-		g35_.fill_color(i, 1, G35::MAX_INTENSITY, COLOR(rOut, gOut, bOut));
+		g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, COLOR(rOut, gOut, bOut));
 	}
 
 	step_++;

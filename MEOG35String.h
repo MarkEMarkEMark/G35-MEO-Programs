@@ -7,10 +7,10 @@
   README for complete attributions.
 */
 
-#ifndef INCLUDE_G35_STRING_H
-#define INCLUDE_G35_STRING_H
+#ifndef INCLUDE_MEOG35_STRING_H
+#define INCLUDE_MEOG35_STRING_H
 
-#include <G35.h>
+#include <MEOG35.h>
 
 // A G35String knows how to talk to a real GE Color Effects light string.
 // In particular, it implements the set_color() method of the G35 interface.
@@ -22,16 +22,16 @@
 // to all bulbs starting with bulb #0 and ending with bulb #N-1. If your
 // light programs look right but fractured, it's because you forgot to call
 // enumerate().
-class G35String : public G35 {
+class MEOG35String : public MEOG35 {
  public:
   // |pin|: the Arduino pin driving this string's data line.
   // |light_count|: the number of visible, physical bulbs on the string.
   // |physical_light_count|: the number of physical bulbs on the string.
   // |bulb_zero|: the index of the first bulb (almost always zero).
   // |is_forward|: true if the closest bulb to the plug has the lowest index.
-  G35String(uint8_t pin, uint8_t light_count, uint8_t physical_light_count,
+  MEOG35String(uint8_t pin, uint8_t light_count, uint8_t physical_light_count,
             uint8_t bulb_zero, bool is_forward);
-  G35String(uint8_t pin, uint8_t light_count);
+  MEOG35String(uint8_t pin, uint8_t light_count);
 
   // Implementation of G35 interface.
   virtual uint16_t get_light_count() { return light_count_; }
@@ -72,4 +72,4 @@ class G35String : public G35 {
   void end();
 };
 
-#endif  // INCLUDE_G35_STRING_H
+#endif  // INCLUDE_MEOG35_STRING_H

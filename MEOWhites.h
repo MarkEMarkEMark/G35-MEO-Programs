@@ -14,11 +14,11 @@
 #ifndef INCLUDE_G35_PROGRAMS_MEO_WHITES_H
 #define INCLUDE_G35_PROGRAMS_MEO_WHITES_H
 
-#include <LightProgram.h>
+#include <MEOLightProgram.h>
 
-class MEOWhites : public LightProgram {
+class MEOWhites : public MEOLightProgram {
  public:
-  MEOWhites(G35& g35, uint8_t pattern);
+  MEOWhites(MEOG35& g35, uint8_t pattern);
   uint32_t Do();
 
  private:

@@ -14,11 +14,11 @@
 #ifndef INCLUDE_G35_PROGRAMS_MEO_RAINBOW_H
 #define INCLUDE_G35_PROGRAMS_MEO_RAINBOW_H
 
-#include <LightProgram.h>
+#include <MEOLightProgram.h>
 
-class MEORainbow : public LightProgram {
+class MEORainbow : public MEOLightProgram {
 	public:
-		MEORainbow(G35& g35, uint8_t pattern);
+		MEORainbow(MEOG35& g35, uint8_t pattern);
 		uint32_t Do();
 		uint32_t Wheel(uint16_t WheelPos);
 		uint32_t LineRG(uint16_t WheelPos);

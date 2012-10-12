@@ -13,11 +13,11 @@
 #ifndef INCLUDE_G35_PROGRAMS_MEO_SINE_WAVE_H
 #define INCLUDE_G35_PROGRAMS_MEO_SINE_WAVE_H
 
-#include <LightProgram.h>
+#include <MEOLightProgram.h>
 
-class MEOSineWave : public LightProgram {
+class MEOSineWave : public MEOLightProgram {
 	public:
-		MEOSineWave(G35& g35, uint8_t pattern);
+		MEOSineWave(MEOG35& g35, uint8_t pattern);
 		uint32_t Do();
 		uint32_t Wheel(uint16_t WheelPos);
 

@@ -11,7 +11,7 @@
   loop protocol code that seems to work very well!
 */
 
-#include <G35String.h>
+#include <MEOG35String.h>
 
 #define MHZ_16 (1)  // standard Arduino/Teensy
 
@@ -34,23 +34,23 @@
   digitalWrite(x, HIGH);                        \
   delayMicroseconds(DELAYSHORT);
 
-G35String::G35String(uint8_t pin, uint8_t light_count,
+MEOG35String::MEOG35String(uint8_t pin, uint8_t light_count,
                      uint8_t physical_light_count,
                      uint8_t bulb_zero, bool is_forward)
-: G35(), pin_(pin), physical_light_count_(physical_light_count),
+: MEOG35(), pin_(pin), physical_light_count_(physical_light_count),
   bulb_zero_(bulb_zero), is_forward_(is_forward) {
   pinMode(pin, OUTPUT);
   light_count_ = light_count;
 }
 
-G35String::G35String(uint8_t pin, uint8_t light_count)
-: G35(), pin_(pin), physical_light_count_(light_count),
+MEOG35String::MEOG35String(uint8_t pin, uint8_t light_count)
+: MEOG35(), pin_(pin), physical_light_count_(light_count),
   bulb_zero_(0), is_forward_(true) {
   pinMode(pin, OUTPUT);
   light_count_ = light_count;
 }
 
-void G35String::set_color(uint8_t bulb, uint8_t intensity, color_t color) {
+void MEOG35String::set_color(uint8_t bulb, uint8_t intensity, color_t color) {
   bulb += bulb_zero_;
   uint8_t r, g, b;
   r = color & 0x0F;
@@ -108,11 +108,11 @@ void G35String::set_color(uint8_t bulb, uint8_t intensity, color_t color) {
   interrupts();
 }
 
-void G35String::enumerate() {
+void MEOG35String::enumerate() {
   enumerate(is_forward_);
 }
 
-void G35String::enumerate(bool forward) {
+void MEOG35String::enumerate(bool forward) {
   uint8_t count = physical_light_count_;
   uint8_t bulb = forward ? 0 : light_count_ - 1;
   int8_t delta = forward ? 1 : -1;
@@ -122,15 +122,15 @@ void G35String::enumerate(bool forward) {
   }
 }
 
-void G35String::enumerate_forward() {
+void MEOG35String::enumerate_forward() {
   enumerate(true);
 }
 
-void G35String::enumerate_reverse() {
+void MEOG35String::enumerate_reverse() {
   enumerate(false);
 }
 
-void G35String::do_test_patterns() {
+void MEOG35String::do_test_patterns() {
   const uint8_t d = 1000 / light_count_;
   const uint8_t last_light = light_count_ - 1;
   fill_sequence(0, light_count_, 0, 1, 0, rainbow_color);

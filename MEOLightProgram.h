@@ -8,18 +8,18 @@
   See README for complete attributions.
 */
 
-#ifndef INCLUDE_G35_LIGHT_PROGRAMS_H
-#define INCLUDE_G35_LIGHT_PROGRAMS_H
+#ifndef INCLUDE_G35_MEO_LIGHT_PROGRAMS_H
+#define INCLUDE_G35_MEO_LIGHT_PROGRAMS_H
 
-#include <G35.h>
+#include <MEOG35.h>
 
 // Interface for light programs.
 //
 // A "light program" is what GE means when they say their lights include 14
 // programs. An example is "Chasing Red, White, and Blue."
-class LightProgram {
+class MEOLightProgram {
  public:
- LightProgram(G35& g35, uint8_t pattern)
+ MEOLightProgram(MEOG35& g35, uint8_t pattern)
    : g35_(g35), light_count_(g35.get_light_count()),
     bulb_frame_(g35.get_bulb_frame()) {}
 
@@ -27,7 +27,7 @@ class LightProgram {
   // this function should be called again.
   virtual uint32_t Do() = 0;
  protected:
-  G35& g35_;
+  MEOG35& g35_;
   uint8_t light_count_;
   uint8_t bulb_frame_;
 };
@@ -35,9 +35,9 @@ class LightProgram {
 // A collection of LightProgram classes. Putting them here makes it much
 // easier on app developers because they don't have to create a switch
 // statement for every set of programs they're interested in including.
-class LightProgramGroup {
+class MEOLightProgramGroup {
  public:
-  virtual LightProgram* CreateProgram(G35& lights, uint8_t program_index, uint8_t pattern) = 0;
+  virtual MEOLightProgram* CreateProgram(MEOG35& lights, uint8_t program_index, uint8_t pattern) = 0;
 };
 
 #endif  // INCLUDE_G35_LIGHT_PROGRAMS_H

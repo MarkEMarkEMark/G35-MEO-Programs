@@ -18,38 +18,38 @@
 
 #include <MEOChasing.h>
 
-MEOChasing::MEOChasing(G35& g35, uint8_t pattern)
-  : LightProgram(g35, pattern), count_(1), sequence_(0), wait_(10), pattern_(pattern) {
+MEOChasing::MEOChasing(MEOG35& g35, uint8_t pattern)
+  : MEOLightProgram(g35, pattern), count_(1), sequence_(0), wait_(10), pattern_(pattern) {
   Serial.print("MEOChasing Pattern: ");
   Serial.println(pattern);}
 
 uint32_t MEOChasing::Do() {
 	uint8_t patternLimited = pattern_ % 24;
 	switch (patternLimited) {
-		case 0: g35_.fill_sequence(0, count_, sequence_, 1, G35::MAX_INTENSITY, GreenAccentedAlalogic); break;
-		case 1: g35_.fill_sequence(0, count_, sequence_, 1, G35::MAX_INTENSITY, RedAccentedAlalogic); break;
-		case 2: g35_.fill_sequence(0, count_, sequence_, 1, G35::MAX_INTENSITY, BlueAccentedAlalogic); break;
-		case 3: g35_.fill_sequence(0, count_, sequence_, 1, G35::MAX_INTENSITY, PurplyBlue); break;
-		case 4: g35_.fill_sequence(0, count_, sequence_, 1, G35::MAX_INTENSITY, Valentines); break;
-		case 5: g35_.fill_sequence(0, count_, sequence_, 1, G35::MAX_INTENSITY, BlueTriad); break;
-		case 6: g35_.fill_sequence(0, count_, sequence_, 1, G35::MAX_INTENSITY, BlueTetrad); break;
-		case 7: g35_.fill_sequence(0, count_, sequence_, 1, G35::MAX_INTENSITY, PurpleTetrad); break;
-		case 8: g35_.fill_sequence(0, count_, sequence_, 1, G35::MAX_INTENSITY, GreenTetrad); break;
-		case 9: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, RGBY); break;
-		case 10: g35_.fill_sequence(0, count_, sequence_, 10, G35::MAX_INTENSITY, RWB); break;
-		case 11: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, RC); break;
-		case 12: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, GM); break;
-		case 13: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, BY); break;
-		case 14: g35_.fill_sequence(0, count_, sequence_, 2, G35::MAX_INTENSITY, RCGMBY); break;
-		case 15: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, RG); break;
-		case 16: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, GB); break;
-		case 17: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, BR); break;
-		case 18: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, CM); break;
-		case 19: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, MY); break;
-		case 20: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, YC); break;
-		case 21: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, RGB); break;
-		case 22: g35_.fill_sequence(0, count_, sequence_, 5, G35::MAX_INTENSITY, CYM); break;
-		case 23: g35_.fill_sequence(0, count_, sequence_, 2, G35::MAX_INTENSITY, PastelRGB); break;
+		case 0: g35_.fill_sequence(0, count_, sequence_, 1, MEOG35::MAX_INTENSITY, GreenAccentedAlalogic); break;
+		case 1: g35_.fill_sequence(0, count_, sequence_, 1, MEOG35::MAX_INTENSITY, RedAccentedAlalogic); break;
+		case 2: g35_.fill_sequence(0, count_, sequence_, 1, MEOG35::MAX_INTENSITY, BlueAccentedAlalogic); break;
+		case 3: g35_.fill_sequence(0, count_, sequence_, 1, MEOG35::MAX_INTENSITY, PurplyBlue); break;
+		case 4: g35_.fill_sequence(0, count_, sequence_, 1, MEOG35::MAX_INTENSITY, Valentines); break;
+		case 5: g35_.fill_sequence(0, count_, sequence_, 1, MEOG35::MAX_INTENSITY, BlueTriad); break;
+		case 6: g35_.fill_sequence(0, count_, sequence_, 1, MEOG35::MAX_INTENSITY, BlueTetrad); break;
+		case 7: g35_.fill_sequence(0, count_, sequence_, 1, MEOG35::MAX_INTENSITY, PurpleTetrad); break;
+		case 8: g35_.fill_sequence(0, count_, sequence_, 1, MEOG35::MAX_INTENSITY, GreenTetrad); break;
+		case 9: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, RGBY); break;
+		case 10: g35_.fill_sequence(0, count_, sequence_, 10, MEOG35::MAX_INTENSITY, RWB); break;
+		case 11: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, RC); break;
+		case 12: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, GM); break;
+		case 13: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, BY); break;
+		case 14: g35_.fill_sequence(0, count_, sequence_, 2, MEOG35::MAX_INTENSITY, RCGMBY); break;
+		case 15: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, RG); break;
+		case 16: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, GB); break;
+		case 17: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, BR); break;
+		case 18: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, CM); break;
+		case 19: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, MY); break;
+		case 20: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, YC); break;
+		case 21: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, RGB); break;
+		case 22: g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, CYM); break;
+		case 23: g35_.fill_sequence(0, count_, sequence_, 2, MEOG35::MAX_INTENSITY, PastelRGB); break;
 	}
 	if (count_ < light_count_) {
 		++count_;

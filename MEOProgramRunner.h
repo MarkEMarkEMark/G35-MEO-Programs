@@ -8,10 +8,10 @@
   See README for complete attributions.
 */
 
-#ifndef INCLUDE_G35_PROGRAM_RUNNER_H
-#define INCLUDE_G35_PROGRAM_RUNNER_H
+#ifndef INCLUDE_G35_MEO_PROGRAM_RUNNER_H
+#define INCLUDE_G35_MEO_PROGRAM_RUNNER_H
 
-#include <LightProgram.h>
+#include <MEOLightProgram.h>
 
 // ProgramRunner manages a collection of LightPrograms.
 //
@@ -24,9 +24,9 @@
 // to change programs more frequently, for example if you've implemented
 // a remote control receiver.
 
-class ProgramRunner {
+class MEOProgramRunner {
  public:
- ProgramRunner(LightProgram* (*program_creator)(uint8_t program_index, uint8_t pattern),
+ MEOProgramRunner(MEOLightProgram* (*program_creator)(uint8_t program_index, uint8_t pattern),
 	       uint8_t program_count, unsigned long program_duration_seconds)
    : program_count_(program_count),
     program_duration_seconds_(program_duration_seconds),
@@ -115,8 +115,8 @@ class ProgramRunner {
   uint8_t pattern_;
   unsigned long next_switch_millis_;
   unsigned long next_do_millis_;
-  LightProgram* (*program_creator_)(uint8_t program_index, uint8_t pattern);
-  LightProgram* program_;
+  MEOLightProgram* (*program_creator_)(uint8_t program_index, uint8_t pattern);
+  MEOLightProgram* program_;
 };
 
 #endif  // INCLUDE_G35_PROGRAM_RUNNER_H

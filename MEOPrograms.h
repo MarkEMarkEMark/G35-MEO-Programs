@@ -13,7 +13,7 @@
 #ifndef INCLUDE_G35_MEO_PROGRAMS_H
 #define INCLUDE_G35_MEO_PROGRAMS_H
 
-#include <LightProgram.h>
+#include <MEOLightProgram.h>
 #include <MEORainbow.h>
 #include <MEOWhites.h>
 #include <MEORandomStrobe.h>
@@ -22,11 +22,11 @@
 #include <MEOChasing.h>
 #include <MEOColorPhasing.h>
 
-class MEOProgramGroup : public LightProgramGroup {
+class MEOProgramGroup : public MEOLightProgramGroup {
 	public:
 		enum {ProgramCount = 7};
 
-		virtual LightProgram* CreateProgram(G35& lights, uint8_t program_index, uint8_t pattern);
+		virtual MEOLightProgram* CreateProgram(MEOG35& lights, uint8_t program_index, uint8_t pattern);
 };
 
 #endif  // INCLUDE_G35_MEO_PROGRAMS_H

@@ -14,11 +14,11 @@
 #ifndef INCLUDE_G35_PROGRAMS_MEO_COLORPHASING_H
 #define INCLUDE_G35_PROGRAMS_MEO_COLORPHASING_H
 
-#include <LightProgram.h>
+#include <MEOLightProgram.h>
 
-class MEOColorPhasing : public LightProgram {
+class MEOColorPhasing : public MEOLightProgram {
 	public:
-		MEOColorPhasing(G35& g35, uint8_t pattern);
+		MEOColorPhasing(MEOG35& g35, uint8_t pattern);
 		uint32_t Do();
 
 	private:

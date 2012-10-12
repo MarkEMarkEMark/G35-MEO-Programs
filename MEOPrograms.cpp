@@ -12,7 +12,7 @@
 
 #include <MEOPrograms.h>
 
-LightProgram* MEOProgramGroup::CreateProgram(G35& lights,
+MEOLightProgram* MEOProgramGroup::CreateProgram(MEOG35& lights,
                                               uint8_t program_index, uint8_t pattern) {
 	Serial.print("LightProgram Pattern: ");
 	Serial.println(pattern);

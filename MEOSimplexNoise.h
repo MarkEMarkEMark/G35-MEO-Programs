@@ -14,11 +14,11 @@
 #ifndef INCLUDE_G35_PROGRAMS_MEO_SIMPLEX_NOISE_H
 #define INCLUDE_G35_PROGRAMS_MEO_SIMPLEX_NOISE_H
 
-#include <LightProgram.h>
+#include <MEOLightProgram.h>
 
-class MEOSimplexNoise : public LightProgram {
+class MEOSimplexNoise : public MEOLightProgram {
  public:
-	MEOSimplexNoise(G35& g35, uint8_t pattern);
+	MEOSimplexNoise(MEOG35& g35, uint8_t pattern);
 	uint32_t Do();
 
  private:

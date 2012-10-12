@@ -12,7 +12,7 @@
 
 #include <MEORandomStrobe.h>
 
-MEORandomStrobe::MEORandomStrobe(G35& g35, uint8_t pattern) : LightProgram(g35, pattern), preFill_(false), strobe_(true), wait_(25), noAtATime_(1), colorMain_(COLOR(0,0,4)), colorFlash_(COLOR(15,15,15)), rainbowFlash_(false), rainbowMain_(false), rainbowFrame_(false), step_(0), myBulb_(0), pattern_(pattern) {
+MEORandomStrobe::MEORandomStrobe(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pattern), preFill_(false), strobe_(true), wait_(25), noAtATime_(1), colorMain_(COLOR(0,0,4)), colorFlash_(COLOR(15,15,15)), rainbowFlash_(false), rainbowMain_(false), rainbowFrame_(false), step_(0), myBulb_(0), pattern_(pattern) {
 }
 
 //ToDo: reduce brightness of rainbowMain_ colour to increase contrast
@@ -77,9 +77,9 @@ uint32_t MEORandomStrobe::Do() {
 		preFill_ = false;
 		if (rainbowMain_)
 		{
-			g35_.fill_color(0, light_count_, G35::MAX_INTENSITY, MEORandomStrobe::Wheel((step_ + 24) % 48));
+			g35_.fill_color(0, light_count_, MEOG35::MAX_INTENSITY, MEORandomStrobe::Wheel((step_ + 24) % 48));
 		} else {
-			g35_.fill_color(0, light_count_, G35::MAX_INTENSITY, colorMain_);
+			g35_.fill_color(0, light_count_, MEOG35::MAX_INTENSITY, colorMain_);
 		}
 		
 	}
@@ -93,9 +93,9 @@ uint32_t MEORandomStrobe::Do() {
 		{
 			if (rainbowFlash_)
 			{
-				g35_.fill_color(myBulbs[myBulb_], 1, G35::MAX_INTENSITY, MEORandomStrobe::Wheel(step_ % 48));
+				g35_.fill_color(myBulbs[myBulb_], 1, MEOG35::MAX_INTENSITY, MEORandomStrobe::Wheel(step_ % 48));
 			} else {
-				g35_.fill_color(myBulbs[myBulb_], 1, G35::MAX_INTENSITY, colorFlash_);
+				g35_.fill_color(myBulbs[myBulb_], 1, MEOG35::MAX_INTENSITY, colorFlash_);
 			}
 
 			myBulb_++;
@@ -111,9 +111,9 @@ uint32_t MEORandomStrobe::Do() {
 			{
 				if (rainbowMain_)
 				{
-					g35_.fill_color(myBulbs[myBulb_], 1, G35::MAX_INTENSITY, MEORandomStrobe::Wheel((step_ + 24) % 48));
+					g35_.fill_color(myBulbs[myBulb_], 1, MEOG35::MAX_INTENSITY, MEORandomStrobe::Wheel((step_ + 24) % 48));
 				} else {
-					g35_.fill_color(myBulbs[myBulb_], 1, G35::MAX_INTENSITY, colorMain_);
+					g35_.fill_color(myBulbs[myBulb_], 1, MEOG35::MAX_INTENSITY, colorMain_);
 				}
 				myBulb_++;
 				simultan++;

@@ -7,14 +7,14 @@
   README for complete attributions.
 */
 
-#include <G35StringGroup.h>
+#include <MEOG35StringGroup.h>
 
-G35StringGroup::G35StringGroup()
+MEOG35StringGroup::MEOG35StringGroup()
 : string_count_(0) {
   light_count_ = 0;
 }
 
-void G35StringGroup::AddString(G35* g35) {
+void MEOG35StringGroup::AddString(MEOG35* g35) {
   if (string_count_ == MAX_STRINGS) {
     return;
   }
@@ -28,11 +28,11 @@ void G35StringGroup::AddString(G35* g35) {
   light_count_ += light_count;
 }
 
-uint16_t G35StringGroup::get_light_count() {
+uint16_t MEOG35StringGroup::get_light_count() {
   return light_count_;
 }
 
-void G35StringGroup::set_color(uint8_t bulb, uint8_t intensity, color_t color) {
+void MEOG35StringGroup::set_color(uint8_t bulb, uint8_t intensity, color_t color) {
   uint8_t string = 0;
   while (bulb >= string_offsets_[string] && string < string_count_) {
     bulb -= string_offsets_[string++];
@@ -47,12 +47,12 @@ void G35StringGroup::set_color(uint8_t bulb, uint8_t intensity, color_t color) {
   }
 }
 
-void G35StringGroup::broadcast_intensity(uint8_t intensity) {
+void MEOG35StringGroup::broadcast_intensity(uint8_t intensity) {
   for (uint8_t i = 0; i < string_count_; ++i) {
     strings_[i]->broadcast_intensity(intensity);
   }
 }
 
-uint8_t G35StringGroup::get_broadcast_bulb() {
+uint8_t MEOG35StringGroup::get_broadcast_bulb() {
   return 0;  // In this implementation, shouldn't ever be called.
 }

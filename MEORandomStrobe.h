@@ -13,11 +13,11 @@
 #ifndef INCLUDE_G35_PROGRAMS_MEO_RANDOM_STROBE_H
 #define INCLUDE_G35_PROGRAMS_MEO_RANDOM_STROBE_H
 
-#include <LightProgram.h>
+#include <MEOLightProgram.h>
 
-class MEORandomStrobe : public LightProgram {
+class MEORandomStrobe : public MEOLightProgram {
 	public:
-		MEORandomStrobe(G35& g35, uint8_t pattern);
+		MEORandomStrobe(MEOG35& g35, uint8_t pattern);
 		uint32_t Do();
 		uint32_t Wheel(uint16_t WheelPos);
 

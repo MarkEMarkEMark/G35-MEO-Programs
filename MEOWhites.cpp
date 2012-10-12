@@ -13,8 +13,8 @@
 
 #include <MEOWhites.h>
 
-MEOWhites::MEOWhites(G35& g35, uint8_t pattern)
-  : LightProgram(g35, pattern), intensity_(0), pattern_(pattern) {
+MEOWhites::MEOWhites(MEOG35& g35, uint8_t pattern)
+  : MEOLightProgram(g35, pattern), intensity_(0), pattern_(pattern) {
 	uint8_t patternLimited = pattern_ % 3;
 	switch (patternLimited) {
 		case 0: g35_.fill_color(0, light_count_, 0, COLOR_WARMWHITE); break;
@@ -35,7 +35,7 @@ MEOWhites::MEOWhites(G35& g35, uint8_t pattern)
 }
 
 uint32_t MEOWhites::Do() {
-  if (intensity_ <= G35::MAX_INTENSITY) {
+  if (intensity_ <= MEOG35::MAX_INTENSITY) {
     g35_.broadcast_intensity(intensity_++);
     return bulb_frame_;
   }

@@ -14,7 +14,7 @@
 #include <MEOSimplexNoise.h>
 
 
-MEOSimplexNoise::MEOSimplexNoise(G35& g35, uint8_t pattern) : LightProgram(g35, pattern), rMult_(1.0), gMult_(1.0), bMult_(1.0), spaceinc_(0.1), timeinc_(0.08), yoffset_(0.0), pattern_(pattern) {
+MEOSimplexNoise::MEOSimplexNoise(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pattern), rMult_(1.0), gMult_(1.0), bMult_(1.0), spaceinc_(0.1), timeinc_(0.08), yoffset_(0.0), pattern_(pattern) {
 }
 
 #define PI 3.14159265
@@ -123,7 +123,7 @@ uint32_t MEOSimplexNoise::Do() {
 			if (bMult_ > 1.0) { bMult_ = 1.0; }
 			else if (bMult_ < 0.0) { bMult_ = 0.0; }
 
-			g35_.fill_color(i, 1, G35::MAX_INTENSITY, COLOR(int(r * rMult_), int(g * gMult_), int(b * bMult_)));
+			g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, COLOR(int(r * rMult_), int(g * gMult_), int(b * bMult_)));
 		}
 		yoffset_ += timeinc_; 
 

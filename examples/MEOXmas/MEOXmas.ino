@@ -10,9 +10,9 @@
 
 //Includes multiple button handling by ladyada: http://www.adafruit.com/blog/2009/10/20/example-code-for-multi-button-checker-with-debouncing/
 
-#include <G35String.h>
-#include <G35StringGroup.h>
-#include <ProgramRunner.h>
+#include <MEOG35String.h>
+#include <MEOG35StringGroup.h>
+#include <MEOProgramRunner.h>
 #include <MEOPrograms.h>
 
 //Buttons initialisation
@@ -27,25 +27,25 @@ volatile byte pressed[NUMBUTTONS], justpressed[NUMBUTTONS], justreleased[NUMBUTT
 
 
 //Lights initialisation
-G35String lights_1(13, 50, 50, 0, false);
-G35String lights_2(12, 50);
+MEOG35String lights_1(13, 50, 50, 0, false);
+MEOG35String lights_2(12, 50);
 
 const int PROGRAM_COUNT = MEOProgramGroup::ProgramCount ;//+ PlusProgramGroup::ProgramCount;
 
 MEOProgramGroup programs;
-G35StringGroup string_group;
+MEOG35StringGroup string_group;
 
 uint8_t program_index = 0; //the main program - rainbow/simplexnoise etc
 uint8_t pattern = 0; //the sub-program - colour scheme etc.
 
-LightProgram* CreateProgram(uint8_t program_index, uint8_t pattern) {
+MEOLightProgram* CreateProgram(uint8_t program_index, uint8_t pattern) {
 	return programs.CreateProgram(string_group, program_index, pattern);
 }
 
 // How long each program should run.
-#define PROGRAM_DURATION_SECONDS (86400) //24 hours
+uint16_t PROGRAM_DURATION_SECONDS = 86400; //24 hours
 
-ProgramRunner runner(CreateProgram, PROGRAM_COUNT, PROGRAM_DURATION_SECONDS);
+MEOProgramRunner runner(CreateProgram, PROGRAM_COUNT, PROGRAM_DURATION_SECONDS);
 
 void setup() {
 	//Lights
@@ -111,6 +111,15 @@ void loop() {
 					break;
 				case 3:
 					pattern--;
+					runner.switch_pattern(false);
+					break;
+				case 7:
+					if (PROGRAM_DURATION_SECONDS == 1)
+					{
+						PROGRAM_DURATION_SECONDS = 86400;
+					} else {
+						PROGRAM_DURATION_SECONDS = 1;
+					}
 					runner.switch_pattern(false);
 					break;
 			}
