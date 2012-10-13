@@ -23,11 +23,12 @@
 #include <MEOChasing.h>
 #include <MEOColorPhasing.h>
 
-class MEOProgramGroup : public MEOLightProgramGroup {
-	public:
-		enum {ProgramCount = 7};
+class MEOProgramGroup : public MEOLightProgramGroup
+{
+public:
+    enum {ProgramCount = 7};
 
-		virtual MEOLightProgram* CreateProgram(MEOG35& lights, uint8_t program_index, uint8_t pattern);
+    virtual MEOLightProgram* CreateProgram(MEOG35& lights, uint8_t program_index, uint8_t pattern);
 };
 
 #endif  // INCLUDE_G35_MEO_PROGRAMS_H

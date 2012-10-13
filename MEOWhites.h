@@ -16,14 +16,15 @@
 
 #include <MEOLightProgram.h>
 
-class MEOWhites : public MEOLightProgram {
- public:
-  MEOWhites(MEOG35& g35, uint8_t pattern);
-  uint32_t Do();
+class MEOWhites : public MEOLightProgram
+{
+public:
+    MEOWhites(MEOG35& g35, uint8_t pattern);
+    uint32_t Do();
 
- private:
-  uint8_t intensity_;
-  uint8_t pattern_;
+private:
+    uint8_t intensity_;
+    uint8_t pattern_;
 };
 
 #endif

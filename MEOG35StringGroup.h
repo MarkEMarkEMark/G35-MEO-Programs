@@ -18,26 +18,27 @@
 // A LightProgram that is given a G35StringGroup will then be able to run
 // itself over the whole virtual string, without needing to know the details
 // of which physical string contains which logical bulb.
-class MEOG35StringGroup : public MEOG35 {
- public:
-  MEOG35StringGroup();
+class MEOG35StringGroup : public MEOG35
+{
+public:
+    MEOG35StringGroup();
 
-  void AddString(MEOG35* g35);
+    void AddString(MEOG35* g35);
 
-  virtual uint16_t get_light_count();
+    virtual uint16_t get_light_count();
 
-  virtual void set_color(uint8_t bulb, uint8_t intensity, color_t color);
-  virtual void broadcast_intensity(uint8_t intensity);
+    virtual void set_color(uint8_t bulb, uint8_t intensity, color_t color);
+    virtual void broadcast_intensity(uint8_t intensity);
 
- protected:
-  virtual uint8_t get_broadcast_bulb();
+protected:
+    virtual uint8_t get_broadcast_bulb();
 
- private:
-  enum { MAX_STRINGS = 16 };
+private:
+    enum { MAX_STRINGS = 16 };
 
-  uint8_t string_count_;
-  MEOG35* strings_[MAX_STRINGS];
-  uint16_t string_offsets_[MAX_STRINGS];
+    uint8_t string_count_;
+    MEOG35* strings_[MAX_STRINGS];
+    uint16_t string_offsets_[MAX_STRINGS];
 };
 
 #endif  // INCLUDE_MEOG35_STRING_GROUP_H

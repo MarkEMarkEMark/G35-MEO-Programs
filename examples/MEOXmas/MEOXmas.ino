@@ -22,9 +22,10 @@
 byte buttons[] = {54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64}; // the analog A0-15 pins are also known as 54+ on Mega
 // This handy macro lets us determine how big the array up above is, by checking the size
 #define NUMBUTTONS sizeof(buttons)
-// we will track if a button is just pressed, just released, or 'currently pressed' 
+// we will track if a button is just pressed, just released, or 'currently pressed'
 volatile byte pressed[NUMBUTTONS], justpressed[NUMBUTTONS], justreleased[NUMBUTTONS];
 
+//timer
 #define PROG_DUR_LONG 86400  //24 hours
 #define PROG_DUR_SHORT 120  //2 minutes
 
@@ -37,13 +38,11 @@ const int PROGRAM_COUNT = MEOProgramGroup::ProgramCount;
 MEOProgramGroup programs;
 MEOG35StringGroup string_group;
 
-uint8_t program_index = 0; //the main program - rainbow/simplexnoise etc
-uint8_t pattern = 0; //the sub-program - colour scheme etc.
-
 bool lightsOn = true;
 
-MEOLightProgram* CreateProgram(uint8_t program_index, uint8_t pattern) {
-	return programs.CreateProgram(string_group, program_index, pattern);
+MEOLightProgram* CreateProgram(uint8_t program_index, uint8_t pattern)
+{
+    return programs.CreateProgram(string_group, program_index, pattern);
 }
 
 // How long each program should run.
@@ -51,140 +50,140 @@ uint16_t programDuration = PROG_DUR_SHORT; //set for short first, as random is f
 
 MEOProgramRunner runner(CreateProgram, PROGRAM_COUNT, programDuration);
 
-void setup() {
-	//Lights
-	delay(50);
+void setup()
+{
+    //Lights
+    delay(50);
 
-	lights_1.enumerate();
-	lights_2.enumerate();
+    lights_1.enumerate();
+    lights_2.enumerate();
 
-	string_group.AddString(&lights_1);
-	string_group.AddString(&lights_2);
+    string_group.AddString(&lights_1);
+    string_group.AddString(&lights_2);
 
     //Buttons
     byte i;
 
-	// set up serial port
-	Serial.begin(9600);
-	Serial.print("Button checker with ");
-	Serial.print(NUMBUTTONS, DEC);
-	Serial.println(" buttons");
+    // Make input & enable pull-up resistors on switch pins
+    for (i=0; i< NUMBUTTONS; i++)
+    {
+        pinMode(buttons[i], INPUT);
+        digitalWrite(buttons[i], HIGH);
+    }
 
-	// Make input & enable pull-up resistors on switch pins
-	for (i=0; i< NUMBUTTONS; i++) {
-		pinMode(buttons[i], INPUT);
-		digitalWrite(buttons[i], HIGH);
-	}
+    // Run timer2 interrupt every 15 ms
+    TCCR2A = 0;
+    TCCR2B = 1<<CS22 | 1<<CS21 | 1<<CS20;
 
-	// Run timer2 interrupt every 15 ms 
-	TCCR2A = 0;
-	TCCR2B = 1<<CS22 | 1<<CS21 | 1<<CS20;
-
-	//Timer2 Overflow Interrupt Enable
-	TIMSK2 |= 1<<TOIE2;
+    //Timer2 Overflow Interrupt Enable
+    TIMSK2 |= 1<<TOIE2;
 }
 
-void loop() {
-	//Lights
-	runner.loop();
+void loop()
+{
+    //Lights
+    runner.loop();
 
-	//Buttons
-	for (byte myButton = 0; myButton < NUMBUTTONS; myButton++) {
-		if (justpressed[myButton]) {
-			justpressed[myButton] = 0;
+    //Buttons
+    for (byte myButton = 0; myButton < NUMBUTTONS; myButton++)
+    {
+        if (justpressed[myButton])
+        {
+            justpressed[myButton] = 0;
 
-			Serial.print("Button: ");
-			Serial.print(myButton);
-			Serial.print("    ProgramIndex: ");
-			Serial.print(program_index);
-			Serial.print("    Pattern: ");
-			Serial.println(pattern);
-
-            switch (myButton) {
-				case 0: //program Up
-					program_index++;
-					runner.switch_program(true);
-					break;
-				case 1: //program Down
-					program_index--;
-					runner.switch_program(false);
-					break;
-				case 2: //variation up
-					pattern++;
-					runner.switch_pattern(true);
-					break;
-				case 3: //variation down
-					pattern--;
-					runner.switch_pattern(false);
-					break;
-				case 9: //toggle random program
-					if (programDuration == PROG_DUR_SHORT)
-					{
-						programDuration = PROG_DUR_LONG;
-						runner.program_duration_seconds_ = programDuration;
-						runner.switch_program(true);
-					} else {
-						programDuration = PROG_DUR_SHORT;
-						runner.program_duration_seconds_ = programDuration;
-						runner.random_program();
-					}
-					break;
-				case 10: //toggle off / on
-					if (lightsOn)
-					{
-						lightsOn = false;
-						runner.program_duration_seconds_ = PROG_DUR_LONG;
-						runner.switch_program(true);
-						runner.turn_off();
-					} else {
-						lightsOn = true;
-						runner.program_duration_seconds_ = programDuration;
-						runner.switch_program(true);
-					}
-					break;
-			}
-		}
-	}
+            switch (myButton)
+            {
+            case 0: //program Up
+                runner.switch_program(true);
+                break;
+            case 1: //program Down
+                runner.switch_program(false);
+                break;
+            case 2: //variation up
+                runner.switch_pattern(true);
+                break;
+            case 3: //variation down
+                runner.switch_pattern(false);
+                break;
+            case 9: //toggle random program
+                if (programDuration == PROG_DUR_SHORT)
+                {
+                    programDuration = PROG_DUR_LONG;
+                    runner.program_duration_seconds_ = programDuration;
+                    runner.same_program();
+                }
+                else
+                {
+                    programDuration = PROG_DUR_SHORT;
+                    runner.program_duration_seconds_ = programDuration;
+                    runner.random_program();
+                }
+                break;
+            case 10: //toggle off / on
+                if (lightsOn)
+                {
+                    lightsOn = false;
+                    runner.program_duration_seconds_ = PROG_DUR_LONG;
+                    runner.same_program();
+                    runner.turn_off();
+                }
+                else
+                {
+                    lightsOn = true;
+                    runner.program_duration_seconds_ = programDuration;
+                    runner.same_program();
+                }
+                break;
+            }
+        }
+    }
 }
 
 //Debounce buttons - nothing to do with lights...
-SIGNAL(TIMER2_OVF_vect) {
-	check_switches();
+SIGNAL(TIMER2_OVF_vect)
+{
+    check_switches();
 }
 
 void check_switches()
 {
-	static byte previousstate[NUMBUTTONS];
-	static byte currentstate[NUMBUTTONS];
-	static long lasttime;
-	byte index;
+    static byte previousstate[NUMBUTTONS];
+    static byte currentstate[NUMBUTTONS];
+    static long lasttime;
+    byte index;
 
-	if (millis() < lasttime) {
-		// we wrapped around, lets just try again
-		lasttime = millis();
-	}
+    if (millis() < lasttime)
+    {
+        // we wrapped around, lets just try again
+        lasttime = millis();
+    }
 
-	if ((lasttime + DEBOUNCE) > millis()) {
-		// not enough time has passed to debounce
-		return;
-	}
+    if ((lasttime + DEBOUNCE) > millis())
+    {
+        // not enough time has passed to debounce
+        return;
+    }
 
-	// ok we have waited DEBOUNCE milliseconds, lets reset the timer
-	lasttime = millis();
+    // ok we have waited DEBOUNCE milliseconds, lets reset the timer
+    lasttime = millis();
 
-	for (index = 0; index < NUMBUTTONS; index++) {
-		currentstate[index] = digitalRead(buttons[index]);   // read the button
-		if (currentstate[index] == previousstate[index]) {
-			if ((pressed[index] == LOW) && (currentstate[index] == LOW)) {
-				// just pressed
-				justpressed[index] = 1;
-			}
-			else if ((pressed[index] == HIGH) && (currentstate[index] == HIGH)) {
-				// just released
-				justreleased[index] = 1;
-			}
-			pressed[index] = !currentstate[index];  // remember, digital HIGH means NOT pressed
-		}
-		previousstate[index] = currentstate[index];   // keep a running tally of the buttons
-	}
+    for (index = 0; index < NUMBUTTONS; index++)
+    {
+        currentstate[index] = digitalRead(buttons[index]);   // read the button
+        if (currentstate[index] == previousstate[index])
+        {
+            if ((pressed[index] == LOW) && (currentstate[index] == LOW))
+            {
+                // just pressed
+                justpressed[index] = 1;
+            }
+            else if ((pressed[index] == HIGH) && (currentstate[index] == HIGH))
+            {
+                // just released
+                justreleased[index] = 1;
+            }
+            pressed[index] = !currentstate[index];  // remember, digital HIGH means NOT pressed
+        }
+        previousstate[index] = currentstate[index];   // keep a running tally of the buttons
+    }
 }

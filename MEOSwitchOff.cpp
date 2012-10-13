@@ -14,11 +14,13 @@
 #include <MEOSwitchOff.h>
 
 MEOSwitchOff::MEOSwitchOff(MEOG35& g35)
-  : MEOLightProgram(g35, 0) {
-	g35_.fill_color(0, light_count_, 0, COLOR(0,0,0));
+    : MEOLightProgram(g35, 0)
+{
+    g35_.fill_color(0, light_count_, 0, COLOR(0,0,0));
 }
 
-uint32_t MEOSwitchOff::Do() {
+uint32_t MEOSwitchOff::Do()
+{
     g35_.broadcast_intensity(MEOG35::MAX_INTENSITY);
     return bulb_frame_;
 }

@@ -16,10 +16,11 @@
 
 #include <MEOLightProgram.h>
 
-class MEOSwitchOff : public MEOLightProgram {
- public:
-  MEOSwitchOff(MEOG35& g35);
-  uint32_t Do();
+class MEOSwitchOff : public MEOLightProgram
+{
+public:
+    MEOSwitchOff(MEOG35& g35);
+    uint32_t Do();
 };
 
 #endif

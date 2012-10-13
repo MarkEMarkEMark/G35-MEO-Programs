@@ -16,26 +16,27 @@
 
 #include <MEOLightProgram.h>
 
-class MEOSimplexNoise : public MEOLightProgram {
- public:
-	MEOSimplexNoise(MEOG35& g35, uint8_t pattern);
-	uint32_t Do();
+class MEOSimplexNoise : public MEOLightProgram
+{
+public:
+    MEOSimplexNoise(MEOG35& g35, uint8_t pattern);
+    uint32_t Do();
 
- private:
-	float SimplexNoise(float x, float y, float z);
-	int fastfloor(float n);
-	float k_fn(int a);
-	int shuffle(int i, int j, int k);
-	int b(int i, int j, int k, int B);
-	int b(int N, int B);
+private:
+    float SimplexNoise(float x, float y, float z);
+    int fastfloor(float n);
+    float k_fn(int a);
+    int shuffle(int i, int j, int k);
+    int b(int i, int j, int k, int B);
+    int b(int N, int B);
 
-	float rMult_;
-	float gMult_;
-	float bMult_;
-	float spaceinc_;
-	float timeinc_;
-	float yoffset_;
-	uint8_t pattern_;
+    float rMult_;
+    float gMult_;
+    float bMult_;
+    float spaceinc_;
+    float timeinc_;
+    float yoffset_;
+    uint8_t pattern_;
 };
 
 #endif

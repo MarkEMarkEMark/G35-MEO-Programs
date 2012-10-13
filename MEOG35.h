@@ -35,81 +35,94 @@
 
 // G35 is an abstract class representing a string of G35 lights of arbitrary
 // length. LightPrograms talk to this interface.
-class MEOG35 {
- public:
-  MEOG35();
+class MEOG35
+{
+public:
+    MEOG35();
 
-  enum { 
-    // This is an abstraction leak. The choice was either to define a scaling
-    // function that mapped [0..255] to [0..0xcc], or just to leak a hardware
-    // detail through to this interface. We chose pragmatism.
-    MAX_INTENSITY = 0xcc
-  };
+    enum
+    {
+        // This is an abstraction leak. The choice was either to define a scaling
+        // function that mapped [0..255] to [0..0xcc], or just to leak a hardware
+        // detail through to this interface. We chose pragmatism.
+        MAX_INTENSITY = 0xcc
+    };
 
-  enum {
-    RB_RED = 0,
-    RB_ORANGE,
-    RB_YELLOW,
-    RB_GREEN,
-    RB_BLUE,
-    RB_INDIGO,
-    RB_VIOLET
-  };
+    enum
+    {
+        RB_RED = 0,
+        RB_ORANGE,
+        RB_YELLOW,
+        RB_GREEN,
+        RB_BLUE,
+        RB_INDIGO,
+        RB_VIOLET
+    };
 
-  enum {
-    RB_FIRST = RB_RED,
-    RB_LAST = RB_VIOLET,
-    RB_COUNT = RB_LAST + 1
-  };
+    enum
+    {
+        RB_FIRST = RB_RED,
+        RB_LAST = RB_VIOLET,
+        RB_COUNT = RB_LAST + 1
+    };
 
-  virtual uint16_t get_light_count() = 0;
-  virtual uint16_t get_last_light() { return get_light_count() - 1; }
-  virtual uint16_t get_halfway_point() { return get_light_count() / 2; }
+    virtual uint16_t get_light_count() = 0;
+    virtual uint16_t get_last_light()
+    {
+        return get_light_count() - 1;
+    }
+    virtual uint16_t get_halfway_point()
+    {
+        return get_light_count() / 2;
+    }
 
-  // One bulb's share of a second, in milliseconds
-  virtual uint8_t get_bulb_frame() { return 1000 / get_light_count(); }
+    // One bulb's share of a second, in milliseconds
+    virtual uint8_t get_bulb_frame()
+    {
+        return 1000 / get_light_count();
+    }
 
-  // Turn on a specific LED with a color and brightness
-  virtual void set_color(uint8_t bulb, uint8_t intensity, color_t color) = 0;
+    // Turn on a specific LED with a color and brightness
+    virtual void set_color(uint8_t bulb, uint8_t intensity, color_t color) = 0;
 
-  // Like set_color, but doesn't explode with positions out of range
-  virtual bool set_color_if_in_range(uint8_t led, uint8_t intensity,
-                                     color_t color);
+    // Like set_color, but doesn't explode with positions out of range
+    virtual bool set_color_if_in_range(uint8_t led, uint8_t intensity,
+                                       color_t color);
 
-  // Color data type
-  static color_t color(uint8_t r, uint8_t g, uint8_t b);
+    // Color data type
+    static color_t color(uint8_t r, uint8_t g, uint8_t b);
 
-  // Returns primary hue colors
-  static color_t color_hue(uint8_t h);
+    // Returns primary hue colors
+    static color_t color_hue(uint8_t h);
 
-  static color_t rainbow_color(uint16_t color);
+    static color_t rainbow_color(uint16_t color);
 
-  // Given an int value, returns a "max" color (one with R/G/B each set to
-  // 0 or 255, except for black). The mapping is arbitary but deterministic.
-  static color_t max_color(uint16_t color);
+    // Given an int value, returns a "max" color (one with R/G/B each set to
+    // 0 or 255, except for black). The mapping is arbitary but deterministic.
+    static color_t max_color(uint16_t color);
 
-  // Make all LEDs the same color starting at specified beginning LED
-  virtual void fill_color(uint8_t begin, uint8_t count, uint8_t intensity,
-                          color_t color);
-  virtual void fill_random_max(uint8_t begin, uint8_t count, uint8_t intensity);
+    // Make all LEDs the same color starting at specified beginning LED
+    virtual void fill_color(uint8_t begin, uint8_t count, uint8_t intensity,
+                            color_t color);
+    virtual void fill_random_max(uint8_t begin, uint8_t count, uint8_t intensity);
 
-  virtual void fill_sequence(uint16_t sequence, uint8_t span_size,
-                             uint8_t intensity,
-                             color_t (*sequence_func)(uint16_t sequence));
-  virtual void fill_sequence(uint8_t begin, uint8_t count, uint16_t sequence,
-                             uint8_t span_size, uint8_t intensity,
-                             color_t (*sequence_func)(uint16_t sequence));
-  virtual void fill_sequence(uint8_t begin, uint8_t count, uint16_t sequence,
-                             uint8_t span_size,
-                             bool (*sequence_func)(uint16_t sequence,
-                                                   color_t& color,
-                                                   uint8_t& intensity));
-  virtual void broadcast_intensity(uint8_t intensity);
+    virtual void fill_sequence(uint16_t sequence, uint8_t span_size,
+                               uint8_t intensity,
+                               color_t (*sequence_func)(uint16_t sequence));
+    virtual void fill_sequence(uint8_t begin, uint8_t count, uint16_t sequence,
+                               uint8_t span_size, uint8_t intensity,
+                               color_t (*sequence_func)(uint16_t sequence));
+    virtual void fill_sequence(uint8_t begin, uint8_t count, uint16_t sequence,
+                               uint8_t span_size,
+                               bool (*sequence_func)(uint16_t sequence,
+                                       color_t& color,
+                                       uint8_t& intensity));
+    virtual void broadcast_intensity(uint8_t intensity);
 
- protected:
-  uint16_t light_count_;
+protected:
+    uint16_t light_count_;
 
-  virtual uint8_t get_broadcast_bulb() = 0;
+    virtual uint8_t get_broadcast_bulb() = 0;
 };
 
 #endif  // INCLUDE_MEOG35_ARDUINO_H
