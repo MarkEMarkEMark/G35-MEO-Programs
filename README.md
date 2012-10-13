@@ -98,9 +98,8 @@ The programs and variations are, as follows:
     - Wavey pastels
     - Subtly changing pastels
     - White twinkle
-    - RGB Evolving pastel wave
-    - GBR Evolving pastel wave
-    - GRB Evolving pastel wave
+    - Ever evolving pastel wave
+    - Still pastel rainbow
 
 There are parameters that I've allowed for that I'll eventually make into sub-variations on other buttons
 
