@@ -100,6 +100,8 @@ The programs and variations are, as follows:
     - White twinkle
     - Ever evolving pastel wave
     - Still pastel rainbow
+- Dither: brings a colour in, in a dither pattern - nothing spectacular yet - work in progress
+- Oscillate: like a pendulum - work in progress
 
 There are parameters that I've allowed for that I'll eventually make into sub-variations on other buttons
 
