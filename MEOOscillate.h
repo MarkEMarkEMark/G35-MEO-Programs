@@ -10,20 +10,25 @@
   See README for complete attributions.
 */
 
-#ifndef INCLUDE_G35_PROGRAMS_MEO_WHITES_H
-#define INCLUDE_G35_PROGRAMS_MEO_WHITES_H
+#ifndef INCLUDE_G35_PROGRAMS_MEO_OSCILLATE_H
+#define INCLUDE_G35_PROGRAMS_MEO_OSCILLATE_H
 
 #include <MEOLightProgram.h>
 
-class MEOWhites : public MEOLightProgram
+class MEOOscillate : public MEOLightProgram
 {
 public:
-    MEOWhites(MEOG35& g35, uint8_t pattern);
+    MEOOscillate(MEOG35& g35, uint8_t pattern);
     uint32_t Do();
 
 private:
     uint8_t intensity_;
     uint8_t pattern_;
+	uint16_t colorMain_;
+	uint16_t wait_;
+	float decay_;
+	uint16_t oscillations_;
+	uint16_t step_;
 };
 
 #endif

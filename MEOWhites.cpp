@@ -6,7 +6,6 @@
   By Mike Tsao <http://github.com/sowbug>.
 
   and Mark Ortiz
-  and Adafruit
 
   See README for complete attributions.
 */
