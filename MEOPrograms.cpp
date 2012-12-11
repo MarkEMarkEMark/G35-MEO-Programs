@@ -39,8 +39,6 @@ MEOLightProgram* MEOProgramGroup::CreateProgram(MEOG35& lights,
             return new MEOColorPhasing(lights, pattern);
 		case 7:
             return new MEODither(lights, pattern);
-		case 8:
-            return new MEOOscillate(lights, pattern);
         }
     }
     // not reached

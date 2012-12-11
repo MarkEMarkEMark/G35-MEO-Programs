@@ -20,9 +20,11 @@ MEORainbow::MEORainbow(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, patt
 uint32_t MEORainbow::Do()
 {
     bool fourtyEight;
+	bool toggle;
+	toggle = true;
     for (int i=0; i < light_count_; i++)
     {
-        switch (pattern_ % 8)
+        switch (pattern_ % 12)
         {
         case 0:
             fourtyEight = false;
@@ -40,7 +42,7 @@ uint32_t MEORainbow::Do()
             fourtyEight = true;
             g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::Wheel((i + step_) % 48));
             break;
-        case 4:
+        case 4: //spread across all lights (the more lights, the more noticable)
             fourtyEight = false;
             g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineRG(((i * 32 / light_count_) + step_) % 32));
             break;
@@ -55,6 +57,54 @@ uint32_t MEORainbow::Do()
         case 7:
             fourtyEight = true;
             g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::Wheel(((i * 48 / light_count_) + step_) % 48));
+            break;
+        case 8: //interlaced
+            fourtyEight = false;
+            if (toggle)
+			{
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineRG((i + 16 + step_) % 32));
+				toggle = false;
+			} else
+			{
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineRG((i + step_) % 32));
+				toggle = true;
+			}
+            break;
+        case 9:
+            fourtyEight = false;
+		    if (toggle)
+			{
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineGB((i + 16 + step_) % 32));
+				toggle = false;
+			} else
+			{
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineGB((i + step_) % 32));
+				toggle = true;
+			}
+            break;
+        case 10:
+            fourtyEight = false;
+            if (toggle)
+			{
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineBR((i + 16 + step_) % 32));
+				toggle = false;
+			} else
+			{
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::LineBR((i + step_) % 32));
+				toggle = true;
+			}
+            break;
+        case 11:
+            fourtyEight = true;
+            if (toggle)
+			{
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::Wheel((i + 24 + step_) % 48));
+				toggle = false;
+			} else
+			{
+				g35_.fill_color(i, 1, MEOG35::MAX_INTENSITY, MEORainbow::Wheel((i + step_) % 48));
+				toggle = true;
+			}
             break;
         }
     }

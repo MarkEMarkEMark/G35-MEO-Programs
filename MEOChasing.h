@@ -43,6 +43,10 @@ public:
     static color_t GreenAccentedAlalogic(uint16_t sequence);
     static color_t RedAccentedAlalogic(uint16_t sequence);
     static color_t BlueAccentedAlalogic(uint16_t sequence);
+	static color_t RWG(uint16_t sequence);
+	static color_t ColourCycle(uint16_t sequence);
+	void RGB_to_HSL	(double r, double g, double b, double *h, double *s, double *l);
+	void HSL_to_RGB(double h, double sl, double l, double *r, double *g, double *b);
 
 private:
     uint8_t count_;

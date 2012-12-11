@@ -15,15 +15,16 @@
 MEOWhites::MEOWhites(MEOG35& g35, uint8_t pattern)
     : MEOLightProgram(g35, pattern), intensity_(0), pattern_(pattern)
 {
-    switch (pattern_ % 3)
+	uint8_t current = 0;
+    switch (pattern_ % 5)
     {
-    case 0:
+    case 0: //Warm White
         g35_.fill_color(0, light_count_, 0, COLOR_WARMWHITE);
         break;
-    case 1:
+    case 1: //Cold White
         g35_.fill_color(0, light_count_, 0, COLOR_WHITE);
         break;
-    case 2:
+    case 2: // Warm & Cold White
         for (int i = 0; i < light_count_; i++)
         {
             if ((i % 2) == 0)
@@ -35,6 +36,46 @@ MEOWhites::MEOWhites(MEOG35& g35, uint8_t pattern)
                 g35_.fill_color(i, 1, 0, COLOR_WARMWHITE);
             }
 
+        }
+        break;
+	case 3: //Hint of RGB
+        for (int i = 0; i < light_count_; i++)
+        {
+			switch (current)
+			{
+				case 0:
+					g35_.fill_color(i, 1, 0, COLOR(0xF, 0x9, 0x9));
+					current = 1;
+					break;
+				case 1:
+					g35_.fill_color(i, 1, 0, COLOR(0x9, 0xF, 0x9));
+					current = 2;
+					break;
+				case 2:
+					g35_.fill_color(i, 1, 0, COLOR(0x9, 0x9, 0xF));
+					current = 0;
+					break;
+			}
+        }
+        break;
+	case 4: //Hint of CYM
+        for (int i = 0; i < light_count_; i++)
+        {
+			switch (current)
+			{
+				case 0:
+					g35_.fill_color(i, 1, 0, COLOR(0x9, 0xF, 0xF));
+					current = 1;
+					break;
+				case 1:
+					g35_.fill_color(i, 1, 0, COLOR(0xF, 0xF, 0x9));
+					current = 2;
+					break;
+				case 2:
+					g35_.fill_color(i, 1, 0, COLOR(0xF, 0x9, 0xF));
+					current = 0;
+					break;
+			}
         }
         break;
     }

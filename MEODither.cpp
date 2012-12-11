@@ -14,37 +14,30 @@
 #include <MEODither.h>
 
 MEODither::MEODither(MEOG35& g35, uint8_t pattern)
-    : MEOLightProgram(g35, pattern), intensity_(0), pattern_(pattern), colorMain_(0), wait_(10), step_(0)
+    : MEOLightProgram(g35, pattern), intensity_(0), pattern_(pattern), colorMain_(0), wait_(0), dithStep_(0), step_(0)
 {
 }
 
 uint32_t MEODither::Do()
 {
-    switch (pattern_ % 8)
+	bool fourtyEight;
+    switch (pattern_ % 4)
     {
-    case 0:
-        colorMain_ = COLOR(15,0,0);
+	case 0:
+        fourtyEight = false;
+        colorMain_ = MEODither::LineRG(step_ % 32);
         break;
     case 1:
-        colorMain_ = COLOR(11,0,3);
+        fourtyEight = false;
+        colorMain_ = MEODither::LineGB(step_ % 32);
         break;
     case 2:
-        colorMain_ = COLOR(7,0,7);
+        fourtyEight = false;
+        colorMain_ = MEODither::LineBR(step_ % 32);
         break;
     case 3:
-        colorMain_ = COLOR(3,0,11);
-        break;
-    case 4:
-        colorMain_ = COLOR(0,0,15);
-        break;
-    case 5:
-        colorMain_ = COLOR(3,0,11);
-        break;
-	case 6:
-        colorMain_ = COLOR(7,0,7);
-        break;
-    case 7:
-        colorMain_ = COLOR(11,0,3);
+        fourtyEight = true;
+        colorMain_ = MEODither::Wheel(step_ % 48);
         break;
     }
 
@@ -62,18 +55,108 @@ uint32_t MEODither::Do()
 		reverse = 0;
 		for(bit = 1; bit <= hiBit; bit <<= 1) {
 			reverse <<= 1;
-			if(step_ & bit) reverse |= 1;
+			if(dithStep_ & bit) reverse |= 1;
 		}
 		g35_.fill_color(reverse, 1, MEOG35::MAX_INTENSITY, colorMain_);
 		delay(wait_);
 	//}
 
-	step_++;
-	if (step_ == (hiBit << 1))
+	dithStep_++;
+	if (dithStep_ == (hiBit << 1))
 	{
-		step_ = 0;
-		pattern_++;
+		dithStep_ = 0;
+		//pattern_++;
+
+		//reset at end of wheel or line
+		step_++; step_++; step_++; step_++; //do 4, so not so smooth
+		if (((step_ == 48) && fourtyEight) || ((step_ == 32) && !fourtyEight))
+		{
+			step_ = 0;
+		}
 	}
 
+
+
 	return bulb_frame_;
+}
+
+uint32_t MEODither::Wheel(uint16_t WheelPos)
+{
+    byte r, g, b;
+    switch(WheelPos / 16)
+    {
+    case 0:
+        r = 15 - WheelPos % 16; // red down
+        g = WheelPos % 16;       // green up
+        b = 0;                    // blue off
+        break;
+    case 1:
+        g = 15 - WheelPos % 16; // green down
+        b = WheelPos % 16;       // blue up
+        r = 0;                    // red off
+        break;
+    case 2:
+        b = 15 - WheelPos % 16; // blue down
+        r = WheelPos % 16;       // red up
+        g = 0;                    // green off
+        break;
+    }
+    return(COLOR(r,g,b));
+}
+
+uint32_t MEODither::LineRG(uint16_t WheelPos)
+{
+    byte r, g, b;
+    switch(WheelPos / 16)
+    {
+    case 0:
+        r = 15 - WheelPos % 16; // red down
+        g = WheelPos % 16;       // green up
+        b = 0;					// blue off
+        break;
+    case 1:
+        r = WheelPos % 16;       // red up
+        g = 15 - WheelPos % 16; // green down
+        b = 0;					// blue off
+        break;
+    }
+    return(COLOR(r,g,b));
+}
+
+uint32_t MEODither::LineGB(uint16_t WheelPos)
+{
+    byte r, g, b;
+    switch(WheelPos / 16)
+    {
+    case 0:
+        r = 0;                    // red off
+        g = 15 - WheelPos % 16; // green down
+        b = WheelPos % 16;       // blue up
+        break;
+    case 1:
+        r = 0;                    // red off
+        g = WheelPos % 16;       // green up
+        b = 15 - WheelPos % 16; // blue down
+        break;
+    }
+    return(COLOR(r,g,b));
+}
+
+uint32_t MEODither::LineBR(uint16_t WheelPos)
+{
+    byte r, g, b;
+    switch(WheelPos / 16)
+    {
+    case 0:
+        r = WheelPos % 16;       // red up
+        g = 0;                    // green off
+        b = 15 - WheelPos % 16; // blue down
+        break;
+    case 1:
+        r = 15 - WheelPos % 16; // red down
+        g = 0;                    // green off
+        b = WheelPos % 16;       // blue up
+        break;
+    }
+    return(COLOR(r,g,b));
 }

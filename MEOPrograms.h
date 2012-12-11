@@ -23,12 +23,12 @@
 #include <MEOChasing.h>
 #include <MEOColorPhasing.h>
 #include <MEODither.h>
-#include <MEOOscillate.h>
+//#include <MEOOscillate.h>
 
 class MEOProgramGroup : public MEOLightProgramGroup
 {
 public:
-    enum {ProgramCount = 9};
+    enum {ProgramCount = 8};
 
     virtual MEOLightProgram* CreateProgram(MEOG35& lights, uint8_t program_index, uint8_t pattern);
 };

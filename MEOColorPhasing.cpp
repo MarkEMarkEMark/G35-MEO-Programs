@@ -24,33 +24,81 @@ MEOColorPhasing::MEOColorPhasing(MEOG35& g35, uint8_t pattern) : MEOLightProgram
 
 uint32_t MEOColorPhasing::Do()
 {
-    switch (pattern_ % 5)
+    switch (pattern_ % 11)
     {
     case 0:  //Wavey pastels
         phaseR_ = 0;
-        phaseB_ = 2*PI/3;
-        phaseG_ = 4*PI/3;
+        phaseG_ = 2*PI/3;
+        phaseB_ = 4*PI/3;
         frequencyR_ = float(fStep_) / 100.0;
         frequencyG_ = float(fStep_) / 100.0;
         frequencyB_ = float(fStep_) / 100.0;
         break;
     case 1: // subtly changing pastels
         phaseR_ = 0;
-        phaseB_ = (2*PI/360) * pStep_;
-        phaseG_ = (4*PI/360) * pStep_;
+        phaseG_ = (2*PI/360) * pStep_;
+        phaseB_ = (4*PI/360) * pStep_;
         frequencyR_ = 1.666;
         frequencyG_ = 2.666;
         frequencyB_ = 3.666;
         break;
     case 2: //White twinkle
         phaseR_ = pStep_;
-        phaseB_ = pStep_;
         phaseG_ = pStep_;
+        phaseB_ = pStep_;
         frequencyR_ = float(fStep_) / 100.0;
         frequencyG_ = float(fStep_) / 100.0;
         frequencyB_ = float(fStep_) / 100.0;
         break;
-    case 3: //Evolving pastel wave
+    case 3: //Red/Cyan change twinkle
+        phaseR_ = 0;
+        phaseG_ = pStep_;
+        phaseB_ = pStep_;
+        frequencyR_ = float(fStep_) / 100.0;
+        frequencyG_ = float(fStep_) / 100.0;
+        frequencyB_ = float(fStep_) / 100.0;
+        break;
+    case 4: //Blue/Yellow change twinkle
+        phaseR_ = pStep_;
+        phaseG_ = 0;
+        phaseB_ = pStep_;
+        frequencyR_ = float(fStep_) / 100.0;
+        frequencyG_ = float(fStep_) / 100.0;
+        frequencyB_ = float(fStep_) / 100.0;
+        break;
+    case 5: //Green/Magenta change twinkle
+        phaseR_ = pStep_;
+        phaseG_ = pStep_;
+        phaseB_ = 0;
+        frequencyR_ = float(fStep_) / 100.0;
+        frequencyG_ = float(fStep_) / 100.0;
+        frequencyB_ = float(fStep_) / 100.0;
+        break;
+    case 6: //Red twinkle 
+        phaseR_ = 0;
+        phaseG_ = pStep_;
+        phaseB_ = pStep_;
+        frequencyR_ = 0;
+        frequencyG_ = float(fStep_) / 100.0;
+        frequencyB_ = float(fStep_) / 100.0;
+        break;
+    case 7: //Green twinkle 
+        phaseR_ = pStep_;
+        phaseG_ = 0;
+        phaseB_ = pStep_;
+        frequencyR_ = float(fStep_) / 100.0;
+        frequencyG_ = 0;
+        frequencyB_ = float(fStep_) / 100.0;
+        break;
+    case 8: //Blue twinkle
+        phaseR_ = pStep_;
+        phaseG_ = pStep_;
+        phaseB_ = 0;
+        frequencyR_ = float(fStep_) / 100.0;
+        frequencyG_ = float(fStep_) / 100.0;
+        frequencyB_ = 0;
+        break;
+    case 9: //Evolving pastel wave
         switch (turn_ % 6)
         {
         case 0:
@@ -81,8 +129,8 @@ uint32_t MEOColorPhasing::Do()
             frequencyB_ = float(fStep_) / 100.0;
 			break;
         }
-		default:
-			;//nothing - a still pastel rainbow
+		default: //nothing - a still pastel rainbow
+			;
     }
 
     for (int i=0; i < light_count_; i++)

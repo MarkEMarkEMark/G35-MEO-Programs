@@ -50,9 +50,31 @@ public:
         }
     }
 
+//choose the 1st program and pattern
+    void initial_prog_patt()
+    {
+        unsigned long now = millis();
+        next_switch_millis_ = now + program_duration_seconds_ * 1000;
+        next_do_millis_ = now;
+
+		if (program_ != NULL)
+        {
+            delete program_;
+        }
+        program_ = program_creator_(0, 0);
+    }
+
 //choose the 'off' program - doesn't literally turn anything off
     void turn_off()
     {
+        unsigned long now = millis();
+        next_switch_millis_ = now + program_duration_seconds_ * 1000;
+        next_do_millis_ = now;
+
+		if (program_ != NULL)
+        {
+            delete program_;
+        }
         program_ = program_creator_(255, 0);
     }
 
