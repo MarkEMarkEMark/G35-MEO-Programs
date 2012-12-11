@@ -21,23 +21,40 @@ MEODither::MEODither(MEOG35& g35, uint8_t pattern)
 uint32_t MEODither::Do()
 {
 	bool fourtyEight;
-    switch (pattern_ % 4)
+	uint8_t stepCount;
+	stepCount = 1;
+    switch (pattern_ % 6)
     {
-	case 0:
+	case 0: // Red to Green to Red
         fourtyEight = false;
+		stepCount = 2;
         colorMain_ = MEODither::LineRG(step_ % 32);
         break;
-    case 1:
+    case 1: // Green to Blue to Green
         fourtyEight = false;
+		stepCount = 2;
         colorMain_ = MEODither::LineGB(step_ % 32);
         break;
-    case 2:
+    case 2: //Blue to Red to Blue
         fourtyEight = false;
+		stepCount = 2;
         colorMain_ = MEODither::LineBR(step_ % 32);
         break;
-    case 3:
+    case 3: // Colour wheel smooth
         fourtyEight = true;
+		stepCount = 3;
         colorMain_ = MEODither::Wheel(step_ % 48);
+        break;
+    case 4: //Colour wheel jump
+        fourtyEight = true;
+		stepCount = 11;
+        colorMain_ = MEODither::Wheel(step_ % 48);
+        break;
+    case 5: //Always changing
+        fourtyEight = true;
+		stepCount = 0;
+        colorMain_ = MEODither::Wheel(step_ % 48);
+		step_++;// step_++;
         break;
     }
 
@@ -68,15 +85,12 @@ uint32_t MEODither::Do()
 		//pattern_++;
 
 		//reset at end of wheel or line
-		step_++; step_++; step_++; step_++; //do 4, so not so smooth
+		step_ = step_ + stepCount; //step_++; step_++; step_++; //do 4, so not so smooth
 		if (((step_ == 48) && fourtyEight) || ((step_ == 32) && !fourtyEight))
 		{
 			step_ = 0;
 		}
 	}
-
-
-
 	return bulb_frame_;
 }
 
