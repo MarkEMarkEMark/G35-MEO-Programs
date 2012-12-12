@@ -23,7 +23,7 @@ The six buttons should be wired to A0-A10, and perform as follows:
 - A9: Toggle Random / Fixed
 - A10: Toggle On/Off
 
-![Wiring](/MarkEMarkEMark/G35-MEO-Programs/Images/MEOG35Lights.jpg?raw=true "G-35 Lights") )
+![Wiring](/MarkEMarkEMark/G35-MEO-Programs/blob/master/Images/MEOG35Lights.jpg?raw=true "G-35 Lights")
 
 The programs and variations are, as follows:
 
