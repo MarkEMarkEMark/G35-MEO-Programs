@@ -34,6 +34,7 @@ private:
     uint32_t step_;
     uint32_t step2_;
     uint8_t pattern_;
+	bool graduated_;
 };
 
 #endif

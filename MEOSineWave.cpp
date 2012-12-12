@@ -13,7 +13,7 @@
 
 #include <MEOSineWave.h>
 
-MEOSineWave::MEOSineWave(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pattern), preFill_(true), strobe_(true), wait_(0), colorMain_(COLOR(0,0,15)), colorHi_(COLOR(12,12,12)), colorLo_(COLOR(0,0,0)), wavesPerString_(2), rainbowMain_(true), step_(0), step2_(0), pattern_(pattern)
+MEOSineWave::MEOSineWave(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pattern), preFill_(true), strobe_(true), wait_(0), colorMain_(COLOR(0,0,15)), colorHi_(COLOR(12,12,12)), colorLo_(COLOR(0,0,0)), wavesPerString_(2), rainbowMain_(true), step_(0), step2_(0), pattern_(pattern), graduated_(false)
 {
 }
 
@@ -21,34 +21,39 @@ MEOSineWave::MEOSineWave(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pa
 
 uint32_t MEOSineWave::Do()
 {
-    switch (pattern_ % 7)
+    switch (pattern_ % 8)
     {
-    case 0:
+    case 0: //red - candy stripe
         rainbowMain_ = false;
-        colorMain_ = COLOR(15,0,0);
+        colorMain_ = COLOR(10,0,0);
         break;
-    case 1:
+    case 1: //green
         rainbowMain_ = false;
-        colorMain_ = COLOR(0,15,0);
+        colorMain_ = COLOR(0,10,0);
         break;
-    case 2:
+    case 2: //blue
         rainbowMain_ = false;
-        colorMain_ = COLOR(0,0,15);
+        colorMain_ = COLOR(0,0,10);
         break;
-    case 3:
+    case 3: //yellow
         rainbowMain_ = false;
         colorMain_ = COLOR(8,8,0);
         break;
-    case 4:
+    case 4: //magenta
         rainbowMain_ = false;
         colorMain_ = COLOR(8,0,8);
         break;
-    case 5:
+    case 5: //cyan
         rainbowMain_ = false;
         colorMain_ = COLOR(0,8,8);
         break;
-    case 6:
+    case 6: //solid changing rainbow
         rainbowMain_ = true;
+		graduated_ = false;
+        break;
+    case 7: //graduated rainbow
+        rainbowMain_ = true;
+		graduated_ = true;
         break;
     }
 
@@ -84,9 +89,17 @@ uint32_t MEOSineWave::Do()
             y  = 1.0 - y; // Translate Y to 0.0 (top) to 1.0 (center)
             if (rainbowMain_)
             {
-                rOut = rhi - (byte)((float)(rhi - rRainbow) * y);
-                gOut = ghi - (byte)((float)(ghi - gRainbow) * y);
-                bOut = bhi - (byte)((float)(bhi - bRainbow) * y);
+				if (graduated_)  //override solid rainbow with graduated one
+				{ //ideally would be spread across lights, but currently fixed to 48 bulbs
+					colorRainbow = MEOSineWave::Wheel(i % 48);
+
+				    bRainbow = (colorRainbow >> 8) & 0xf;
+				    gRainbow = (colorRainbow >>  4) & 0xf;
+				    rRainbow =  colorRainbow  & 0xf;
+				}
+				rOut = rhi - (byte)((float)(rhi - rRainbow) * y);
+				gOut = ghi - (byte)((float)(ghi - gRainbow) * y);
+				bOut = bhi - (byte)((float)(bhi - bRainbow) * y);
             }
             else
             {
@@ -101,6 +114,14 @@ uint32_t MEOSineWave::Do()
             y += 1.0; // Translate Y to 0.0 (bottom) to 1.0 (center)
             if (rainbowMain_)
             {
+				if (graduated_) //override solid rainbow with graduated one
+				{
+					colorRainbow = MEOSineWave::Wheel(i % 48);
+
+				    bRainbow = (colorRainbow >> 8) & 0xf;
+				    gRainbow = (colorRainbow >>  4) & 0xf;
+				    rRainbow =  colorRainbow  & 0xf;
+				}
                 rOut = rlo + (byte)((float)(rRainbow) * y);
                 gOut = glo + (byte)((float)(gRainbow) * y);
                 bOut = blo + (byte)((float)(bRainbow) * y);
