@@ -20,10 +20,15 @@ class MEOWhites : public MEOLightProgram
 public:
     MEOWhites(MEOG35& g35, uint8_t pattern);
     uint32_t Do();
+	static color_t RGB(uint16_t sequence);
+    static color_t CYM(uint16_t sequence);
 
 private:
     uint8_t intensity_;
     uint8_t pattern_;
+	uint8_t count_;
+    uint16_t sequence_;
+	uint16_t wait_;
 };
 
 #endif
