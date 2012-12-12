@@ -23,12 +23,16 @@ The six buttons should be wired to A0-A10, and perform as follows:
 - A9: Toggle Random / Fixed
 - A10: Toggle On/Off
 
+![Wiring](https://github.com/MarkEMarkEMark/G35-MEO-Programs/Images/MEO%20G35%20Lights.jpg)
+
 The programs and variations are, as follows:
 
 - Whites: various simple whites
     - Warm White
     - Cold White
     - Warm and Cold White
+    - Hint of RGB White
+    - Hint of CYM White
 - Rainbow: colour chasing with shades between (based on Adafruit's LED light strip sample code: https://github.com/adafruit/LPD8806)
     - Autumn Red & Green (spread across strings)
     - Ocean Green & Blue (spread across strings)
@@ -38,6 +42,10 @@ The programs and variations are, as follows:
     - Ocean Green & Blue
     - Pretty Blue & Red
     - Full Rainbow
+    - Autumn Red & Green (interlaced direction)
+    - Ocean Green & Blue (interlaced direction)
+    - Pretty Blue & Red (interlaced direction)
+    - Full Rainbow (interlaced direction)
 - Random Stobe: Eiffel Tower at night type flashing effect
     - Black background / White flash
     - Blue background / White flash
@@ -69,7 +77,9 @@ The programs and variations are, as follows:
     - Magenta
     - Cyan
     - Rainbow
+    - Rainbow Graduated
 - Chaser: This is a simple chase effect, but with nicer colour variations
+    - Work in progress: Colour Cycle
     - Green Analogic
     - Red Analogic
     - Blue Analogic
@@ -98,10 +108,22 @@ The programs and variations are, as follows:
     - Wavey pastels
     - Subtly changing pastels
     - White twinkle
+    - Red/Cyan
+    - Blue/Yellow
+    - Green/Magenta
+    - Red
+    - Green
+    - Blue
     - Ever evolving pastel wave
     - Still pastel rainbow
-- Dither: brings a colour in, in a dither pattern - nothing spectacular yet - work in progress
-- Oscillate: like a pendulum - work in progress
+- Dither:
+    - Red to Green
+    - Green to Blue
+    - Blue to Red
+    - Colour Wheel smooth
+    - Colour Wheel jump
+    - Always changing
+- Oscillate: like a pendulum - work in progress (disabled)
 
 There are parameters that I've allowed for that I'll eventually make into sub-variations on other buttons
 
