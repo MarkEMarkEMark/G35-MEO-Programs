@@ -36,10 +36,10 @@ uint32_t MEOChasing::Do()
         g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, RedAccentedAlalogic);
         break;
     case 2:
-        g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, BlueAccentedAlalogic);
+		g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, GreenAccentedAlalogic);
         break;
     case 3:
-        g35_.fill_sequence(0, count_, sequence_, 3, MEOG35::MAX_INTENSITY, PurplyBlue);
+		g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, BlueAccentedAlalogic);
         break;
     case 4:
         g35_.fill_sequence(0, count_, sequence_, 3, MEOG35::MAX_INTENSITY, Valentines);
@@ -105,7 +105,7 @@ uint32_t MEOChasing::Do()
         g35_.fill_sequence(0, count_, sequence_, 3, MEOG35::MAX_INTENSITY, RWG);
         break;
     case 25:
-        g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, GreenAccentedAlalogic);
+        g35_.fill_sequence(0, count_, sequence_, 3, MEOG35::MAX_INTENSITY, PurplyBlue);
         break;
     }
     if (count_ < light_count_)
@@ -476,9 +476,9 @@ color_t MEOChasing::GreenTetrad(uint16_t sequence)
     return COLOR(0xF, 0x0, 0xA);
 }
 
-color_t MEOChasing::RedAccentedAlalogic(uint16_t sequence)
+color_t MEOChasing::RedAccentedAlalogic(uint16_t sequence) 
 {
-    sequence = sequence % 3;
+    sequence = sequence % 3;  //accent removed - % 4 for accent
     if (sequence == 0)
     {
         return COLOR(0xF, 0x0, 0x9);
@@ -491,7 +491,7 @@ color_t MEOChasing::RedAccentedAlalogic(uint16_t sequence)
     {
         return COLOR(0xF, 0x0, 0x0);
     }
-    return COLOR(0x0, 0xF, 0x0);
+	return COLOR(0x0, 0xF, 0x0);
 }
 
 color_t MEOChasing::GreenAccentedAlalogic(uint16_t sequence)
@@ -509,7 +509,7 @@ color_t MEOChasing::GreenAccentedAlalogic(uint16_t sequence)
     {
         return COLOR(0x0, 0xF, 0x0);
     }
-    return COLOR(0xF, 0x0, 0x0);
+	return COLOR(0xF, 0x0, 0x0);
 }
 
 color_t MEOChasing::BlueAccentedAlalogic(uint16_t sequence)
@@ -527,7 +527,7 @@ color_t MEOChasing::BlueAccentedAlalogic(uint16_t sequence)
     {
         return COLOR(0x0, 0x0, 0xF);
     }
-    return COLOR(0xF, 0xC, 0x0); //180 degrees - Complimentary
+	return COLOR(0xF, 0xC, 0x0); //180 degrees - Complimentary
 }
 
 color_t MEOChasing::ColourCycle(uint16_t sequence)

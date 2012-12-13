@@ -37,6 +37,9 @@ private:
     bool fForward_;
     uint8_t turn_;
     uint8_t pattern_;
+	bool grnOff_;
+	bool redOff_;
+	bool bluOff_;
 };
 
 #endif

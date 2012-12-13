@@ -20,59 +20,75 @@ MEORandomStrobe::MEORandomStrobe(MEOG35& g35, uint8_t pattern) : MEOLightProgram
 
 uint32_t MEORandomStrobe::Do()
 {
-    switch (pattern_ % 10)
+    switch (pattern_ % 11)
     {
-    case 0:
+    case 0: //Black - white flash
         rainbowMain_ = false;
         rainbowFlash_ = false;
         rainbowFrame_ = false;
         colorMain_ = COLOR(0,0,0);
         colorFlash_ = COLOR(15,15,15);
+		noAtATime_ = 1;
+		wait_ = 25;
         break;
-    case 1:
+    case 1: //Blue - white flash
         rainbowMain_ = false;
         rainbowFlash_ = false;
         rainbowFrame_ = false;
         colorMain_ = COLOR(0,0,4);
         colorFlash_ = COLOR(15,15,15);
+		noAtATime_ = 1;
+		wait_ = 25;
         break;
-    case 2:
+    case 2: //Red - white flash
         rainbowMain_ = false;
         rainbowFlash_ = false;
         rainbowFrame_ = false;
         colorMain_ = COLOR(4,0,0);
         colorFlash_ = COLOR(15,15,15);
+		noAtATime_ = 1;
+		wait_ = 25;
         break;
-    case 3:
+    case 3: //Green - white flash
         rainbowMain_ = false;
         rainbowFlash_ = false;
         rainbowFrame_ = false;
         colorMain_ = COLOR(0,4,0);
         colorFlash_ = COLOR(15,15,15);
+		noAtATime_ = 1;
+		wait_ = 25;
         break;
-    case 4:
+    case 4: //Black - rainbow flash - all bulbs of single colour before change
         rainbowMain_ = false;
         rainbowFlash_ = true;
         rainbowFrame_ = true;
         colorMain_ = COLOR(0,0,0);
+		noAtATime_ = 5;
+		wait_ = 25;
         break;
-    case 5:
+    case 5: //Black - rainbow flash - colour changes with each bulb flash
         rainbowMain_ = false;
         rainbowFlash_ = true;
         rainbowFrame_ = false;
         colorMain_ = COLOR(0,0,0);
+		noAtATime_ = 5;
+		wait_ = 25;
         break;
-    case 6:
+    case 6:  //Rainbow backround - white flash
         rainbowMain_ = true;
         rainbowFlash_ = false;
         rainbowFrame_ = true;
         colorFlash_ = COLOR(15,15,15);
+		noAtATime_ = 5;
+		wait_ = 25;
         break;
-    case 7:
+    case 7: //Multi-coloured background - white flash
         rainbowMain_ = true;
         rainbowFlash_ = false;
         rainbowFrame_ = false;
         colorFlash_ = COLOR(15,15,15);
+		noAtATime_ = 2;
+		wait_ = 25;
         break;
     case 8:  //red backround - blue flash
         rainbowMain_ = false;
@@ -80,6 +96,8 @@ uint32_t MEORandomStrobe::Do()
         rainbowFrame_ = false;
         colorMain_ = COLOR(4,0,0);
         colorFlash_ = COLOR(0,0,15);
+		noAtATime_ = 5;
+		wait_ = 25;
         break;
     case 9: //blue backround - red flash
         rainbowMain_ = false;
@@ -87,6 +105,17 @@ uint32_t MEORandomStrobe::Do()
         rainbowFrame_ = false;
         colorMain_ = COLOR(0,0,4);
         colorFlash_ = COLOR(15,0,0);
+		noAtATime_ = 5;
+		wait_ = 25;
+		break;
+	case 10: //warm white background - white flash
+        rainbowMain_ = false;
+        rainbowFlash_ = false;
+        rainbowFrame_ = false;
+        colorMain_ = COLOR_WARMWHITE;
+        colorFlash_ = COLOR_WHITE;
+		noAtATime_ = 2;
+		wait_ = 60;
     }
 
 
