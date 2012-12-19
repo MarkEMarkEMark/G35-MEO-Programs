@@ -78,6 +78,8 @@ void setup()
 	 
 	//Timer2 Overflow Interrupt Enable
 	TIMSK2 |= 1<<TOIE2;
+
+	randomSeed(analogRead(0));
 }
  
 void loop()

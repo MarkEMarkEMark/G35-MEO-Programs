@@ -85,7 +85,6 @@ public:
         next_switch_millis_ = now + program_duration_seconds_ * 1000;
         next_do_millis_ = now;
 
-        //randomSeed(analogRead(15));
         //would be nice to make this non-repeating, but that would require remembering every variation of every program
         program_index_ = random(254);
         pattern_ = random(254);
