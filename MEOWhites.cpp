@@ -13,7 +13,7 @@
 #include <MEOWhites.h>
 
 MEOWhites::MEOWhites(MEOG35& g35, uint8_t pattern)
-    : MEOLightProgram(g35, pattern), intensity_(0), pattern_(pattern), count_(1), sequence_(0), wait_(250)
+    : MEOLightProgram(g35, pattern), intensity_(0), pattern_(pattern), count_(1), sequence_(0), wait_(100)
 {
 	uint8_t current = 0;
     switch (pattern_ % 7)

@@ -14,7 +14,7 @@
 #include <MEOSimplexNoise.h>
 
 
-MEOSimplexNoise::MEOSimplexNoise(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pattern), rMult_(1.0), gMult_(1.0), bMult_(1.0), spaceinc_(0.1), timeinc_(0.08), yoffset_(0.0), pattern_(pattern)
+MEOSimplexNoise::MEOSimplexNoise(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pattern), rMult_(1.0), gMult_(1.0), bMult_(1.0), spaceinc_(0.2), timeinc_(0.02), yoffset_(0.0), pattern_(pattern)
 {
 }
 

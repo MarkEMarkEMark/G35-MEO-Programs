@@ -27,6 +27,7 @@ MEOChasing::MEOChasing(MEOG35& g35, uint8_t pattern)
 
 uint32_t MEOChasing::Do()
 {
+	wait_ = 10; //default
     switch (pattern_ % 26)
     {
     case 0:
@@ -73,6 +74,7 @@ uint32_t MEOChasing::Do()
         break;
     case 14:
         g35_.fill_sequence(0, count_, sequence_, 2, MEOG35::MAX_INTENSITY, RCGMBY);
+		wait_ = 30;
         break;
     case 15:
         g35_.fill_sequence(0, count_, sequence_, 5, MEOG35::MAX_INTENSITY, RG);
@@ -308,7 +310,7 @@ color_t MEOChasing::RCGMBY(uint16_t sequence)
     }
     if (sequence == 1)
     {
-        return COLOR_CYAN;
+        return COLOR_YELLOW;
     }
     if (sequence == 2)
     {
@@ -316,13 +318,13 @@ color_t MEOChasing::RCGMBY(uint16_t sequence)
     }
     if (sequence == 3)
     {
-        return COLOR_MAGENTA;
+        return COLOR_CYAN;
     }
     if (sequence == 4)
     {
         return COLOR_BLUE;
     }
-    return COLOR_YELLOW;
+    return COLOR_MAGENTA;
 }
 
 color_t MEOChasing::PurplyBlue(uint16_t sequence)
