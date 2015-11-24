@@ -5,16 +5,16 @@
    subject to the BSD license as described in the accompanying LICENSE file.
 
 By Mike Tsao <github.com/sowbug>. See README for complete attributions. */
- 
+
 // and Mark Ortiz
- 
+
 //Includes multiple button handling by ladyada: http://www.adafruit.com/blog/2009/10/20/example-code-for-multi-button-checker-with-debouncing/
- 
+
 #include <MEOG35String.h>
 #include <MEOG35StringGroup.h>
 #include <MEOProgramRunner.h>
 #include <MEOPrograms.h>
- 
+
 //Buttons initialisation
 //if you want, you can even run the button checker in the background, which can make for a very easy interface. Remember that you’ll need to clear “just pressed”, etc. after checking or it will be “stuck” on
 #define DEBOUNCE 10  // button debouncer, how many ms to debounce, 5+ ms is usually plenty
@@ -24,64 +24,64 @@ byte buttons[] = {54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64}; // the analog A0-
 #define NUMBUTTONS sizeof(buttons)
 // we will track if a button is just pressed, just released, or 'currently pressed'
 volatile byte pressed[NUMBUTTONS], justpressed[NUMBUTTONS], justreleased[NUMBUTTONS];
- 
+
 //timer
 #define PROG_DUR_LONG 86400  //24 hours
 #define PROG_DUR_SHORT 120  //2 minutes
- 
+
 //Lights initialisation
 MEOG35String lights_1(13, 50, 50, 0, false);
 //MEOG35String lights_2(12, 50);
- 
+
 const int PROGRAM_COUNT = MEOProgramGroup::ProgramCount;
- 
+
 MEOProgramGroup programs;
 MEOG35StringGroup string_group;
- 
+
 bool lightsOn = true;
 //bool firstTime = true;
- 
+
 MEOLightProgram* CreateProgram(uint8_t program_index, uint8_t pattern)
 {
 	return programs.CreateProgram(string_group, program_index, pattern);
 }
- 
+
 // How long each program should run.
-uint16_t programDuration = PROG_DUR_SHORT; //set for short first, as random is first
- 
+long programDuration = PROG_DUR_SHORT; //set for short first, as random is first
+
 MEOProgramRunner runner(CreateProgram, PROGRAM_COUNT, programDuration);
- 
+
 void setup()
 {
 	//Lights
 	delay(50);
-	 
+
 	lights_1.enumerate();
 	//lights_2.enumerate();
-	 
+
 	string_group.AddString(&lights_1);
 	//string_group.AddString(&lights_2);
-	 
+
 	//Buttons
 	byte i;
-	 
+
 	// Make input & enable pull-up resistors on switch pins
 	for (i=0; i< NUMBUTTONS; i++)
 	{
 		pinMode(buttons[i], INPUT);
 		digitalWrite(buttons[i], HIGH);
 	}
-	 
+
 	// Run timer2 interrupt every 15 ms
 	TCCR2A = 0;
 	TCCR2B = 1<<CS22 | 1<<CS21 | 1<<CS20;
-	 
+
 	//Timer2 Overflow Interrupt Enable
 	TIMSK2 |= 1<<TOIE2;
 
 	randomSeed(analogRead(0));
 }
- 
+
 void loop()
 {
 	//Lights
@@ -97,15 +97,15 @@ void loop()
 	//} else {
 		runner.loop();
 	//}
-	 
-	 
+
+
 	//Buttons
 	for (byte myButton = 0; myButton < NUMBUTTONS; myButton++)
 	{
 		if (justpressed[myButton])
 		{
 			justpressed[myButton] = 0;
-			 
+
 			switch (myButton)
 			{
 				case 0: //program Up
@@ -153,35 +153,35 @@ void loop()
 		}
 	}
 }
- 
+
 //Debounce buttons - nothing to do with lights...
 SIGNAL(TIMER2_OVF_vect)
 {
 	check_switches();
 }
- 
+
 void check_switches()
 {
 	static byte previousstate[NUMBUTTONS];
 	static byte currentstate[NUMBUTTONS];
 	static long lasttime;
 	byte index;
-	 
+
 	if (millis() < lasttime)
 	{
 		// we wrapped around, lets just try again
 		lasttime = millis();
 	}
-	 
+
 	if ((lasttime + DEBOUNCE) > millis())
 	{
 		// not enough time has passed to debounce
 		return;
 	}
-	 
+
 	// ok we have waited DEBOUNCE milliseconds, lets reset the timer
 	lasttime = millis();
-	 
+
 	for (index = 0; index < NUMBUTTONS; index++)
 	{
 		currentstate[index] = digitalRead(buttons[index]);   // read the button
@@ -202,4 +202,4 @@ void check_switches()
 		previousstate[index] = currentstate[index];   // keep a running tally of the buttons
 	}
 }
- 
+
