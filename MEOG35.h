@@ -83,10 +83,10 @@ public:
     }
 
     // Turn on a specific LED with a color and brightness
-    virtual void set_color(uint8_t bulb, uint8_t intensity, color_t color) = 0;
+    virtual void set_color(uint16_t bulb, uint8_t intensity, color_t color) = 0;
 
     // Like set_color, but doesn't explode with positions out of range
-    virtual bool set_color_if_in_range(uint8_t led, uint8_t intensity,
+    virtual bool set_color_if_in_range(uint16_t led, uint8_t intensity,
                                        color_t color);
 
     // Color data type
@@ -102,27 +102,25 @@ public:
     static color_t max_color(uint16_t color);
 
     // Make all LEDs the same color starting at specified beginning LED
-    virtual void fill_color(uint8_t begin, uint8_t count, uint8_t intensity,
+    virtual void fill_color(uint16_t begin, uint16_t count, uint8_t intensity,
                             color_t color);
-    virtual void fill_random_max(uint8_t begin, uint8_t count, uint8_t intensity);
+    virtual void fill_random_max(uint16_t begin, uint16_t count, uint8_t intensity);
 
-    virtual void fill_sequence(uint16_t sequence, uint8_t span_size,
+    virtual void fill_sequence(uint16_t sequence, uint16_t span_size,
                                uint8_t intensity,
                                color_t (*sequence_func)(uint16_t sequence));
-    virtual void fill_sequence(uint8_t begin, uint8_t count, uint16_t sequence,
-                               uint8_t span_size, uint8_t intensity,
+    virtual void fill_sequence(uint16_t begin, uint16_t count, uint16_t sequence,
+                               uint16_t span_size, uint8_t intensity,
                                color_t (*sequence_func)(uint16_t sequence));
-    virtual void fill_sequence(uint8_t begin, uint8_t count, uint16_t sequence,
-                               uint8_t span_size,
+    virtual void fill_sequence(uint16_t begin, uint16_t count, uint16_t sequence,
+                               uint16_t span_size,
                                bool (*sequence_func)(uint16_t sequence,
                                        color_t& color,
                                        uint8_t& intensity));
-    virtual void broadcast_intensity(uint8_t intensity);
+    virtual void broadcast_intensity(uint8_t intensity) = 0;
 
 protected:
     uint16_t light_count_;
-
-    virtual uint8_t get_broadcast_bulb() = 0;
 };
 
 #endif  // INCLUDE_MEOG35_ARDUINO_H

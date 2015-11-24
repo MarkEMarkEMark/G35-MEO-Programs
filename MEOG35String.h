@@ -30,16 +30,15 @@ public:
     // |physical_light_count|: the number of physical bulbs on the string.
     // |bulb_zero|: the index of the first bulb (almost always zero).
     // |is_forward|: true if the closest bulb to the plug has the lowest index.
-    MEOG35String(uint8_t pin, uint8_t light_count, uint8_t physical_light_count,
-                 uint8_t bulb_zero, bool is_forward);
-    MEOG35String(uint8_t pin, uint8_t light_count);
+    MEOG35String(uint8_t pin, uint8_t light_count, uint8_t physical_light_count = 0,
+                 uint8_t bulb_zero = 0, bool is_forward = true);
 
     // Implementation of G35 interface.
-    virtual uint16_t get_light_count()
+    virtual uint16_t get_light_count() override
     {
         return light_count_;
     }
-    void set_color(uint8_t led, uint8_t intensity, color_t color);
+    void set_color(uint16_t led, uint8_t intensity, color_t color);
 
     // Initialize lights by giving them each an address.
     void enumerate();
@@ -48,8 +47,14 @@ public:
     // debugging.
     void do_test_patterns();
 
+    virtual void broadcast_intensity(uint8_t intensity) override
+    {
+        set_color(get_broadcast_bulb(), intensity, COLOR_BLACK);
+    }
+
+
 protected:
-    virtual uint8_t get_broadcast_bulb()
+    uint16_t get_broadcast_bulb()
     {
         return BROADCAST_BULB;
     }

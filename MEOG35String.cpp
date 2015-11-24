@@ -42,17 +42,12 @@ MEOG35String::MEOG35String(uint8_t pin, uint8_t light_count,
 {
     pinMode(pin, OUTPUT);
     light_count_ = light_count;
+    if (physical_light_count_ == 0)
+        physical_light_count_ = light_count;
 }
+#define SET_OR_CLEAR(v, b) { if (v & b) { ONE(pin_); } else { ZERO(pin_); } }
 
-MEOG35String::MEOG35String(uint8_t pin, uint8_t light_count)
-    : MEOG35(), pin_(pin), physical_light_count_(light_count),
-      bulb_zero_(0), is_forward_(true)
-{
-    pinMode(pin, OUTPUT);
-    light_count_ = light_count;
-}
-
-void MEOG35String::set_color(uint8_t bulb, uint8_t intensity, color_t color)
+void MEOG35String::set_color(uint16_t bulb, uint8_t intensity, color_t color)
 {
     bulb += bulb_zero_;
     uint8_t r, g, b;
@@ -61,9 +56,7 @@ void MEOG35String::set_color(uint8_t bulb, uint8_t intensity, color_t color)
     b = (color >> 8) & 0x0F;
 
     if (intensity > MAX_INTENSITY)
-    {
         intensity = MAX_INTENSITY;
-    }
 
     noInterrupts();
 
@@ -71,222 +64,40 @@ void MEOG35String::set_color(uint8_t bulb, uint8_t intensity, color_t color)
     delayMicroseconds(DELAYSHORT);
 
     // LED Address
-    if (bulb & 0x20)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (bulb & 0x10)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (bulb & 0x08)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (bulb & 0x04)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (bulb & 0x02)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (bulb & 0x01)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
+    SET_OR_CLEAR(bulb, 0x20);
+    SET_OR_CLEAR(bulb, 0x10);
+    SET_OR_CLEAR(bulb, 0x08);
+    SET_OR_CLEAR(bulb, 0x04);
+    SET_OR_CLEAR(bulb, 0x02);
+    SET_OR_CLEAR(bulb, 0x01);
 
     // Brightness
-    if (intensity & 0x80)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (intensity & 0x40)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (intensity & 0x20)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (intensity & 0x10)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (intensity & 0x08)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (intensity & 0x04)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (intensity & 0x02)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (intensity & 0x01)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
+    SET_OR_CLEAR(intensity, 0x80);
+    SET_OR_CLEAR(intensity, 0x40);
+    SET_OR_CLEAR(intensity, 0x20);
+    SET_OR_CLEAR(intensity, 0x10);
+    SET_OR_CLEAR(intensity, 0x08);
+    SET_OR_CLEAR(intensity, 0x04);
+    SET_OR_CLEAR(intensity, 0x02);
+    SET_OR_CLEAR(intensity, 0x01);
 
     // Blue
-    if (b & 0x8)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (b & 0x4)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (b & 0x2)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (b & 0x1)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
+    SET_OR_CLEAR(b, 0x08);
+    SET_OR_CLEAR(b, 0x04);
+    SET_OR_CLEAR(b, 0x02);
+    SET_OR_CLEAR(b, 0x01);
 
     // Green
-    if (g & 0x8)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (g & 0x4)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (g & 0x2)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (g & 0x1)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
+    SET_OR_CLEAR(g, 0x08);
+    SET_OR_CLEAR(g, 0x04);
+    SET_OR_CLEAR(g, 0x02);
+    SET_OR_CLEAR(g, 0x01);
 
     // Red
-    if (r & 0x8)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (r & 0x4)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (r & 0x2)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
-    if (r & 0x1)
-    {
-        ONE(pin_);
-    }
-    else
-    {
-        ZERO(pin_);
-    }
+    SET_OR_CLEAR(r, 0x08);
+    SET_OR_CLEAR(r, 0x04);
+    SET_OR_CLEAR(r, 0x02);
+    SET_OR_CLEAR(r, 0x01);
 
     digitalWrite(pin_, LOW);
     delayMicroseconds(DELAYEND);

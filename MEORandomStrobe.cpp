@@ -119,45 +119,23 @@ uint32_t MEORandomStrobe::Do()
     }
 
 
-    ////// This commented out code works, but ideally needs to be outside this class and passed in, because as is the random sequence changes so it's no longer non-repeating
-    ////// I've no idea how to do that, so I'm replacing with pre-generated random arrays
-    ////// and a choice between 50 / 100 bulbs
-    //int myBulbs[light_count_];
-    //int myBulb;
-    //myBulb = 0;
-    //// Initialise myBulbs[] to an ordered range - i.e. myBulbs[0] = 0, myBulbs[1] = 1 etc...
-    //for (int range = 0; range < light_count_; range++)
-    //{
-    //	myBulbs[range] = range;
-    //}
-    //// Random shuffle (note this will always be the same - maybe can re-seed with last number of shuffle?)
-    //// so, myBulbs[0]=38, myBulbs[1]=13.. etc.. for example
-    //for (int shuffle = 0; shuffle < light_count_ - 1; shuffle++)
-    //{
-    //	int myrand = shuffle + (rand() % (light_count_ - shuffle));
-    //	int save = myBulbs[shuffle];
-    //	myBulbs[shuffle] = myBulbs[myrand];
-    //	myBulbs[myrand] = save;
-    //}
-    //srand(myBulbs[0]); //re-seed for next time
-    ////// <<<
-
-    ///// Replacement pre-defined random sequence of bulbs - comment this out, if uncommenting above
-    // If you have different amounts of bulbs, you'll have to create your own non-repeating random sequences.
-    int myBulbs050[100]= {3, 15, 49, 0, 41, 26, 5, 48, 29, 46, 34, 24, 18, 43, 28, 2, 9, 44, 39, 19, 16, 35, 42, 36, 38, 37, 20, 14, 32, 10, 47, 11, 8, 31, 13, 25, 7, 22, 6, 30, 23, 4, 12, 17, 33, 27, 40, 45, 1, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    int myBulbs100[100]= {85, 53, 88, 71, 6, 32, 91, 79, 15, 62, 80, 7, 28, 66, 27, 16, 23, 19, 54, 95, 0, 47, 40, 44, 2, 36, 31, 51, 48, 38, 87, 11, 70, 33, 56, 34, 92, 30, 5, 1, 78, 86, 84, 98, 12, 69, 77, 43, 97, 8, 94, 58, 55, 74, 4, 82, 99, 72, 20, 63, 29, 60, 89, 93, 45, 75, 13, 83, 67, 25, 21, 42, 52, 9, 49, 17, 41, 37, 50, 81, 96, 39, 46, 14, 35, 18, 76, 73, 24, 64, 10, 61, 3, 65, 57, 68, 26, 22, 59, 90};
-    int myBulbs[100];
-    //int myBulb;
-    if (light_count_ == 50)
+    int myBulbs[light_count_];
+    int myBulb;
+    myBulb = 0;
+    // Initialise myBulbs[] to an ordered range - i.e. myBulbs[0] = 0, myBulbs[1] = 1 etc...
+    for (int range = 0; range < light_count_; range++)
     {
-        memcpy(myBulbs, myBulbs050, sizeof(myBulbs));
+    	myBulbs[range] = range;
     }
-    else     //assume 100 bulbs
+    // Random shuffle (note this will always be the same - maybe can re-seed with last number of shuffle?)
+    // so, myBulbs[0]=38, myBulbs[1]=13.. etc.. for example
+    for (int shuffle = 0; shuffle < light_count_ - 1; shuffle++)
     {
-        memcpy(myBulbs, myBulbs100, sizeof(myBulbs));
+        int myrand = shuffle + (rand() % (light_count_ - shuffle));
+        int save = myBulbs[shuffle];
+        myBulbs[shuffle] = myBulbs[myrand];
+        myBulbs[myrand] = save;
     }
-    ////// <<<
-
 
     // pre-fill with background colour if flag set, and first step in
     if (preFill_)

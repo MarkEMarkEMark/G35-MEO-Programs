@@ -21,6 +21,8 @@ MEOLightProgram* MEOProgramGroup::CreateProgram(MEOG35& lights,
     }
     else
     {
+        Serial.print("Running: ");
+        Serial.println(program_index % ProgramCount);
         switch (program_index % ProgramCount)
         {
         case 0:

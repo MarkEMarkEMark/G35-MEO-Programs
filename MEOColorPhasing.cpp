@@ -13,7 +13,9 @@
 
 #include <MEOColorPhasing.h>
 
+#ifndef PI
 #define PI 3.14159265
+#endif
 
 MEOColorPhasing::MEOColorPhasing(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pattern), wait_(0), frequencyR_(0.06), frequencyG_(0.06), frequencyB_(0.06),
     phaseR_(0), phaseG_(2*PI/3), phaseB_(4*PI/3), center_(8), width_(7), fStep_(0), pStep_(0), fForward_(true), turn_(0), pattern_(pattern), grnOff_(false), bluOff_(false), redOff_(false)
@@ -80,7 +82,7 @@ uint32_t MEOColorPhasing::Do()
         frequencyB_ = float(fStep_) / 100.0;
 		redOff_ = false; grnOff_ = false; bluOff_ = false;
         break;
-    case 6: //Red twinkle 
+    case 6: //Red twinkle
         phaseR_ = 0;
         phaseG_ = pStep_;
         phaseB_ = pStep_;
@@ -89,7 +91,7 @@ uint32_t MEOColorPhasing::Do()
         frequencyB_ = float(fStep_) / 100.0;
 		redOff_ = false; grnOff_ = false; bluOff_ = false;
         break;
-    case 7: //Green twinkle 
+    case 7: //Green twinkle
         phaseR_ = pStep_;
         phaseG_ = 0;
         phaseB_ = pStep_;
