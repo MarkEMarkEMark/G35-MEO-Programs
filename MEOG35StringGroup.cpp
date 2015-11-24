@@ -19,11 +19,11 @@ void MEOG35StringGroup::AddString(MEOG35* g35)
     if (string_count_ == MAX_STRINGS)
         return;
 
-    uint16_t light_count = g35->get_light_count();
-    string_offsets_[string_count_] = light_count;
+    uint16_t count = g35->get_light_count();
+    string_length_[string_count_] = count;
     strings_[string_count_] = g35;
+    light_count_ += count;
     string_count_++;
-    light_count_ += light_count;
 }
 
 uint16_t MEOG35StringGroup::get_light_count()
@@ -34,12 +34,15 @@ uint16_t MEOG35StringGroup::get_light_count()
 void MEOG35StringGroup::set_color(uint16_t bulb, uint8_t intensity, color_t color)
 {
     uint8_t string = 0;
-    while (bulb >= string_offsets_[string] && string < string_count_)
-        bulb -= string_offsets_[string++];
+    uint16_t orig = bulb;
+
+    while (bulb >= string_length_[string] && string < string_count_)
+        bulb -= string_length_[string++];
     if (string < string_count_) {
         strings_[string]->set_color(bulb, intensity, color);
     } else {
-        Serial.println("out of bounds");
+        Serial.print(orig);
+        Serial.println(" out of bounds");
     }
 }
 

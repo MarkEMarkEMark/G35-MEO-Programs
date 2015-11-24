@@ -35,5 +35,5 @@ private:
     uint16_t light_count_;
     uint8_t string_count_;
     MEOG35* strings_[MAX_STRINGS];
-    uint16_t string_offsets_[MAX_STRINGS];
+    uint16_t string_length_[MAX_STRINGS];
 };
