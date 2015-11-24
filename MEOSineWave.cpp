@@ -17,7 +17,9 @@ MEOSineWave::MEOSineWave(MEOG35& g35, uint8_t pattern) : MEOLightProgram(g35, pa
 {
 }
 
+#ifndef PI
 #define PI 3.14159265
+#endif
 
 uint32_t MEOSineWave::Do()
 {

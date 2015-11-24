@@ -18,7 +18,10 @@ MEOSimplexNoise::MEOSimplexNoise(MEOG35& g35, uint8_t pattern) : MEOLightProgram
 {
 }
 
+#ifndef PI
 #define PI 3.14159265
+#endif
+
 #define onethird 0.333333333
 #define onesixth 0.166666667
 #define numSpacing 18

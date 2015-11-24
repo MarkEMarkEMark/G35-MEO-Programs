@@ -17,7 +17,7 @@ MEOG35::MEOG35() : light_count_(0)
 {
 }
 
-bool MEOG35::set_color_if_in_range(uint8_t position, uint8_t intensity,
+bool MEOG35::set_color_if_in_range(uint16_t position, uint8_t intensity,
                                    color_t color)
 {
     if (position >= light_count_)
@@ -61,7 +61,7 @@ color_t MEOG35::color_hue(uint8_t h)
     }
 }
 
-void MEOG35::fill_color(uint8_t begin, uint8_t count,
+void MEOG35::fill_color(uint16_t begin, uint16_t count,
                         uint8_t intensity, color_t color)
 {
     while (count--)
@@ -70,7 +70,7 @@ void MEOG35::fill_color(uint8_t begin, uint8_t count,
     }
 }
 
-void MEOG35::fill_random_max(uint8_t begin, uint8_t count, uint8_t intensity)
+void MEOG35::fill_random_max(uint16_t begin, uint16_t count, uint8_t intensity)
 {
     while (count--)
     {
@@ -78,8 +78,8 @@ void MEOG35::fill_random_max(uint8_t begin, uint8_t count, uint8_t intensity)
     }
 }
 
-void MEOG35::fill_sequence(uint8_t begin, uint8_t count,
-                           uint16_t sequence, uint8_t span_size,
+void MEOG35::fill_sequence(uint16_t begin, uint16_t count,
+                           uint16_t sequence, uint16_t span_size,
                            uint8_t intensity,
                            color_t (*sequence_func)(uint16_t sequence))
 {
@@ -89,15 +89,15 @@ void MEOG35::fill_sequence(uint8_t begin, uint8_t count,
     }
 }
 
-void MEOG35::fill_sequence(uint16_t sequence, uint8_t span_size,
+void MEOG35::fill_sequence(uint16_t sequence, uint16_t span_size,
                            uint8_t intensity,
                            color_t (*sequence_func)(uint16_t sequence))
 {
     fill_sequence(0, light_count_, sequence, span_size, intensity, sequence_func);
 }
 
-void MEOG35::fill_sequence(uint8_t begin, uint8_t count,
-                           uint16_t sequence, uint8_t span_size,
+void MEOG35::fill_sequence(uint16_t begin, uint16_t count,
+                           uint16_t sequence, uint16_t span_size,
                            bool (*sequence_func)(uint16_t sequence, color_t& color,
                                    uint8_t& intensity))
 {
@@ -160,9 +160,4 @@ color_t MEOG35::max_color(uint16_t color)
     default:
         return COLOR_WHITE;
     }
-}
-
-void MEOG35::broadcast_intensity(uint8_t intensity)
-{
-    set_color(get_broadcast_bulb(), intensity, COLOR_BLACK);
 }

@@ -7,8 +7,7 @@
   README for complete attributions.
 */
 
-#ifndef INCLUDE_MEOG35_STRING_GROUP_H
-#define INCLUDE_MEOG35_STRING_GROUP_H
+#pragma once
 
 #include <MEOG35.h>
 
@@ -25,20 +24,16 @@ public:
 
     void AddString(MEOG35* g35);
 
-    virtual uint16_t get_light_count();
+    uint16_t get_light_count();
 
-    virtual void set_color(uint8_t bulb, uint8_t intensity, color_t color);
-    virtual void broadcast_intensity(uint8_t intensity);
-
-protected:
-    virtual uint8_t get_broadcast_bulb();
+    void set_color(uint16_t bulb, uint8_t intensity, color_t color);
+    void broadcast_intensity(uint8_t intensity);
 
 private:
     enum { MAX_STRINGS = 16 };
 
+    uint16_t light_count_;
     uint8_t string_count_;
     MEOG35* strings_[MAX_STRINGS];
-    uint16_t string_offsets_[MAX_STRINGS];
+    uint16_t string_length_[MAX_STRINGS];
 };
-
-#endif  // INCLUDE_MEOG35_STRING_GROUP_H
